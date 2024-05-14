@@ -15,7 +15,7 @@ namespace TestRoshanTailor.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "This is a startup text";
 
             return View();
         }
