@@ -15,7 +15,7 @@ namespace TestRoshanTailor.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "This is a startup text";
+            ViewBag.Message = "This is a Test Word";
 
             return View();
         }
