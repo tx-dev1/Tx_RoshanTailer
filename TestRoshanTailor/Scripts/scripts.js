@@ -32,31 +32,3 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const loginButton = document.getElementById('loginButton');
-const registerButton = document.getElementById('registerButton');
-const popupContainer = document.getElementById('popupContainer');
-const closePopup = document.getElementById('closePopup');
-
-loginButton.addEventListener('click', togglePopup);
-registerButton.addEventListener('click', togglePopup);
-closePopup.addEventListener('click', togglePopup);
-
-function togglePopup() {
-    popupContainer.style.display = popupContainer.style.display === 'none' ? 'block' : 'none';
-}

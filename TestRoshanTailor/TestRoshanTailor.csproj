@@ -131,16 +131,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\demo.css" />
-    <Content Include="Content\img\7207752.jpg" />
-    <Content Include="Content\img\cd-icon-menu.svg" />
-    <Content Include="Content\img\cd-logo.svg" />
-    <Content Include="Content\img\eye-solid.svg" />
     <Content Include="Content\img\profile.jpg" />
-    <Content Include="Content\img\RoshanTailor_Logo.jpeg" />
-    <Content Include="Content\img\RoshanTailor_Name_Logo.jpeg" />
-    <Content Include="Content\reset.css" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -157,9 +149,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\placeholders.min.js" />
     <Content Include="Scripts\scripts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
