@@ -9,21 +9,21 @@
 	};
 
 	// Select the password input field and the eye icon button
-	const passwordField = document.getElementById('signup-password');
-	const hidePasswordButton = document.querySelector('.js-hide-password');
+	//const passwordField = document.getElementById('signup-password');
+	//const hidePasswordButton = document.querySelector('.js-hide-password');
 
 	// Add event listener to the eye icon button
-	hidePasswordButton.addEventListener('click', function (event) {
-		// Prevent default action
-		event.preventDefault();
+	//hidePasswordButton.addEventListener('click', function (event) {
+	//	// Prevent default action
+	//	event.preventDefault();
 
-		// Toggle the type attribute of the password field between 'password' and 'text'
-		if (passwordField.type === 'password') {
-			passwordField.type = 'text';
-		} else {
-			passwordField.type = 'password';
-		}
-	});
+	//	// Toggle the type attribute of the password field between 'password' and 'text'
+	//	if (passwordField.type === 'password') {
+	//		passwordField.type = 'text';
+	//	} else {
+	//		passwordField.type = 'password';
+	//	}
+	//});
 
 
 	ModalSignin.prototype.init = function () {

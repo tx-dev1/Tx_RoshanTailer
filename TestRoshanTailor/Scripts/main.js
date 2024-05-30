@@ -5,7 +5,7 @@
 		this.blocks = this.element.getElementsByClassName('js-signin-modal-block');
 		this.switchers = this.element.getElementsByClassName('js-signin-modal-switcher')[0].getElementsByTagName('a'); 
 		this.triggers = document.getElementsByClassName('js-signin-modal-trigger');
-		this.hidePassword = this.element.getElementsByClassName('js-hide-password');
+		/*this.hidePassword = this.element.getElementsByClassName('js-hide-password');*/
 		this.init();
 	};
 
@@ -36,13 +36,13 @@
 		});
 
 		//hide/show password
-		for(var i =0; i < this.hidePassword.length; i++) {
-			(function(i){
-				self.hidePassword[i].addEventListener('click', function(event){
-					self.togglePassword(self.hidePassword[i]);
-				});
-			})(i);
-		} 
+		//for(var i =0; i < this.hidePassword.length; i++) {
+		//	(function(i){
+		//		self.hidePassword[i].addEventListener('click', function(event){
+		//			self.togglePassword(self.hidePassword[i]);
+		//		});
+		//	})(i);
+		//} 
 
 		//IMPORTANT - REMOVE THIS - it's just to show/hide error messages in the demo
 		this.blocks[0].getElementsByTagName('form')[0].addEventListener('submit', function(event){
@@ -55,12 +55,12 @@
 		});
 	};
 
-	ModalSignin.prototype.togglePassword = function(target) {
-		var password = target.previousElementSibling;
-		( 'password' == password.getAttribute('type') ) ? password.setAttribute('type', 'text') : password.setAttribute('type', 'password');
-		target.textContent = ( 'Hide' == target.textContent ) ? 'Show' : 'Hide';
-		putCursorAtEnd(password);
-	}
+	//ModalSignin.prototype.togglePassword = function(target) {
+	//	var password = target.previousElementSibling;
+	//	( 'password' == password.getAttribute('type') ) ? password.setAttribute('type', 'text') : password.setAttribute('type', 'password');
+	//	target.textContent = ( 'Hide' == target.textContent ) ? 'Show' : 'Hide';
+	//	putCursorAtEnd(password);
+	//}
 
 	ModalSignin.prototype.showSigninForm = function(type) {
 		// show modal if not visible
@@ -123,7 +123,6 @@
 		else removeClass(el, className);
 	}
 
-	//credits http://css-tricks.com/snippets/jquery/move-cursor-to-end-of-textarea-or-input/
 	function putCursorAtEnd(el) {
     	if (el.setSelectionRange) {
       		var len = el.value.length * 2;
