@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link href="~/Content/reset.css" rel="stylesheet" />  <!-- CSS reset -->
     <link href="~/Content/style.css" rel="stylesheet" />  <!-- Resource style -->
@@ -50,7 +50,7 @@
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signin-password">Password</label>
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="password" placeholder="password">
-                        <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="fa-solid fa-eye"></i></a>
+                        <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>
                         @*<span class="cd-signin-modal__error">Error message here!</span>*@
                     </p>
 
@@ -87,14 +87,14 @@
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Password</label>
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="password">
-                        <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="fa-solid fa-eye"></i></a>
+                        <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>
                         @*<span class="cd-signin-modal__error">Error message here!</span>*@
                     </p>
 
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Confirm Password</label>
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="confirm password">
-                        <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="fa-solid fa-eye"></i></a>
+                        <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>
                         @*<span class="cd-signin-modal__error">Error message here!</span>*@
                     </p>
 
@@ -133,5 +133,17 @@
     </div> <!-- cd-signin-modal -->
     <script src="~/Scripts/placeholders.min.js"></script>   <!-- polyfill for the HTML5 placeholder attribute -->
     <script src="~/Scripts/main.js"></script>   <!-- Resource JavaScript -->
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye / eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
 </html>
