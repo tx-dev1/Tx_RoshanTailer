@@ -1,4 +1,6 @@
-﻿<!doctype html>
+﻿@model TestRoshanTailor.Models.RegisterViewModel
+
+<!doctype html>
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
@@ -50,7 +52,7 @@
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signin-password">Password</label>
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="password" placeholder="password">
-                        <a href="#0" onclick="showhide()" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye"  id="toggleSignInPassword"></i></a>
+                        <a href="#0" onclick="showhide()" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="toggleSignInPassword"></i></a>
                         @*<span class="cd-signin-modal__error">Error message here!</span>*@
                     </p>
 
@@ -71,41 +73,72 @@
 
             <div class="cd-signin-modal__block js-signin-modal-block" data-type="signup">
                 <!-- sign up form -->
-                <form class="cd-signin-modal__form">
+                @*<form class="cd-signin-modal__form">*@
+                <form asp-action="Register" method="post" class="cd-signin-modal__form">
+                    <!--<p class="cd-signin-modal__fieldset">
+                    <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">Username</label>
+                    <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="username">-->
+                    @*<span class="cd-signin-modal__error">Error message here!</span>*@
+                    <!--</p>-->
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">Username</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="username">
-                        @*<span class="cd-signin-modal__error">Error message here!</span>*@
+                        @*@Html.TextBoxFor(c => c.Username, new { @class = "cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace"})*@
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" asp-for="Username" placeholder="username">
+
+                        <span asp-validation-for="Username" class="cd-signin-modal__error"></span>
                     </p>
 
+
+                    <!--<p class="cd-signin-modal__fieldset">
+                    <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">E mail</label>
+                    <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="e mail">-->
+                    @*<span class="cd-signin-modal__error">Error message here!</span>*@
+                    <!--</p>-->
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">E mail</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="e mail">
-                        @*<span class="cd-signin-modal__error">Error message here!</span>*@
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" asp-for="Email" placeholder="email">
+                        <span asp-validation-for="Email" class="cd-signin-modal__error"></span>
                     </p>
 
+                    <!--<p class="cd-signin-modal__fieldset">
+                    <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Password</label>
+                    <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="password">
+                    <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>-->
+                    @*<span class="cd-signin-modal__error">Error message here!</span>*@
+                    <!--</p>-->
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Password</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="password">
-                        <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>
-                        @*<span class="cd-signin-modal__error">Error message here!</span>*@
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" asp-for="Password" placeholder="password" type="password">
+                        <a href="#0" onclick="showhideReg()" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>
+                        <span asp-validation-for="Password" class="cd-signin-modal__error"></span>
                     </p>
 
+                    <!--<p class="cd-signin-modal__fieldset">
+                    <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Confirm Password</label>
+                    <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="confirm password">
+                    <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>-->
+                    @*<span class="cd-signin-modal__error">Error message here!</span>*@
+                    <!--</p>-->
                     <p class="cd-signin-modal__fieldset">
-                        <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Confirm Password</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="confirm password">
-                        <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>
-                        @*<span class="cd-signin-modal__error">Error message here!</span>*@
+                        <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-confirm-password">Confirm Password</label>
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-confirm-password" asp-for="ConfirmPassword" placeholder="confirm password" type="password">
+                        <a href="#0" onclick="showhideRegConfirm()" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="toggleConfirmPassword"></i></a>
+                        <span asp-validation-for="ConfirmPassword" class="cd-signin-modal__error"></span>
                     </p>
 
 
+                    @*<p class="cd-signin-modal__fieldset">
+                            <input type="checkbox" id="accept-terms" class="cd-signin-modal__input ">
+                            <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+                        </p>*@
                     <p class="cd-signin-modal__fieldset">
-                        <input type="checkbox" id="accept-terms" class="cd-signin-modal__input ">
+                        <input type="checkbox" id="accept-terms" asp-for="AcceptTerms" class="cd-signin-modal__input ">
                         <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+                        <span asp-validation-for="AcceptTerms" class="cd-signin-modal__error"></span>
                     </p>
 
                     <p class="cd-signin-modal__fieldset">
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding" type="submit" value="Create Account">
+                        <input id="createUser" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding" type="submit" value="Create Account">
                     </p>
                 </form>
             </div> <!-- cd-signin-modal__block -->
@@ -133,6 +166,9 @@
     </div> <!-- cd-signin-modal -->
     <script src="~/Scripts/placeholders.min.js"></script>   <!-- polyfill for the HTML5 placeholder attribute -->
     <script src="~/Scripts/main.js"></script>   <!-- Resource JavaScript -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+       
     <script type="text/javascript">
 
         function showhide() {
@@ -143,18 +179,81 @@
                 x.type = "password";
             }
         }
-        
 
-        //const togglePassword = document.querySelector('#togglePassword');
-        //const password = document.querySelector('#password');
+        function showhideReg() {
+            var x = document.getElementById("signup-password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
 
-        //togglePassword.addEventListener('click', function (e) {
-        //    // toggle the type attribute
-        //    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        //    password.setAttribute('type', type);
-        //    // toggle the eye / eye slash icon
-        //    this.classList.toggle('fa-eye-slash');
-        //});
+        function showhideRegConfirm() {
+            var x = document.getElementById("signup-confirm-password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
+
+
+
+        $("body").on("click", "#createUser", function () {
+            var userName = $("#signup-username");
+            var userEmail = $("#signup-email");
+            var userPassword = $("#signup-password");
+            var userCPassword = $("#signup-confirm-password");
+
+            if (userName == undefined || userName == '' || userName == null) {
+                alert('UserName required!');
+            }
+            else if (userEmail == undefined || userEmail == '' || userEmail == null) { alert('User Email required!') }
+            else if (userPassword == undefined || userPassword == '' || userPassword == null) { alert('User Password required!') }
+            else if (userCPassword == undefined || userCPassword == '' || userCPassword == null) { alert('User Confirm Password required!') }
+            else {
+
+                var _customer = {};
+                _customer.Username = userName.val();
+                _customer.Email = userEmail.val();
+                _customer.Password = userPassword.val();
+                _customer.ConfirmPassword = userCPassword.val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/Index",
+                    data: JSON.stringify(_customer),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        alert('User Registerd Successfully!');
+                    },
+                    error: function (x) {
+                        alert('Please fix the error and try again');
+                    }
+                })
+            }
+        })
     </script>
+
+
+    //const togglePassword = document.querySelector('#togglePassword');
+    //const password = document.querySelector('#password');
+
+    //togglePassword.addEventListener('click', function (e) {
+    //    // toggle the type attribute
+    //    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    //    password.setAttribute('type', type);
+    //    // toggle the eye / eye slash icon
+    //    this.classList.toggle('fa-eye-slash');
+    //});
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
 </body>
 </html>
+
+
