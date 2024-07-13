@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -16,7 +18,8 @@ namespace TestRoshanTailor.Controllers
     public class HomeController : Controller
     {
         private readonly IConfiguration _configuration;
-
+        SqlConnection con;
+        String constring;
         public HomeController(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -63,52 +66,132 @@ namespace TestRoshanTailor.Controllers
 
 
         [HttpPost]
-        public ActionResult Index(RegisterViewModel model)
+        public JsonResult Index(RegisterViewModel model)
         {
-
+            var output = string.Empty;
             var result = RegisterUser(model);
-            if (result.Result > 0)
+            if (result > 0)
             {
                 // Registration successful, redirect to login or home page
-                return RedirectToAction("Contact", "Home");
+                //return RedirectToAction("Contact", "Home");
+                output = "Registration Successfull.";
             }
-            else if (result.Result == -1)
+            else if (result == -1)
             {
-                ModelState.AddModelError(string.Empty, "Username already exists.");
+                // ModelState.AddModelError(string.Empty, "Username already exists.");
+                output = "Username already exists.try different one.";
+                //return Json(output, JsonRequestBehavior.AllowGet);
             }
-            else if (result.Result == -2)
+            else if (result == -2)
             {
-                ModelState.AddModelError(string.Empty, "Email already exists.");
+                output = "Email already exists. try different one.";
+                //ModelState.AddModelError(string.Empty, "Email already exists.");
+                //return Json(output, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Registration failed. Please try again.");
+                output = "Internal Server error. please try again.";
+                //ModelState.AddModelError(string.Empty, "Registration failed. Please try again.");
+                //return Json(output, JsonRequestBehavior.AllowGet);
             }
 
-            return View(model);
+            return Json(output, JsonRequestBehavior.AllowGet);
 
         }
-        private async Task<int> RegisterUser(RegisterViewModel model)
+
+        [HttpPost]
+        public JsonResult Login(LoginViewModel model)
+        {
+            var output = string.Empty;
+            var result = LoginUser(model);
+            if (result > 0)
+            {
+                // Registration successful, redirect to login or home page
+                //return RedirectToAction("Contact", "Home");
+                output = "Login Successfull.";
+            }            
+            else
+            {
+                output = "Invalid username and password";
+                //ModelState.AddModelError(string.Empty, "Registration failed. Please try again.");
+                //return Json(output, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(output, JsonRequestBehavior.AllowGet);
+
+        }
+        private int RegisterUser(RegisterViewModel model)
         {
             int result = 0;
-            using (rosharxk_Entities rx = new rosharxk_Entities())
+            try
             {
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("rosharxk_Entities")))
+                SqlConnection con = new SqlConnection();
+                constring = ConfigurationManager.ConnectionStrings["rosharxk_Entities"].ConnectionString;
+
+                using (rosharxk_Entities rx = new rosharxk_Entities())
                 {
-                    using (var command = new SqlCommand("SP_UserRegistration", connection))
+                    using (var connection = new SqlConnection(_configuration.GetConnectionString("rosharxk_Entities")))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@Username", model.Username);
-                        command.Parameters.AddWithValue("@Password", model.Password);
-                        command.Parameters.AddWithValue("@Email", model.Email);
-
-                        await connection.OpenAsync();
-                        result = (int)await command.ExecuteScalarAsync();
+                        con = new SqlConnection(constring);
+                        using (var command = new SqlCommand("SP_UserRegistration", connection))
+                        {
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@Username", model.Username);
+                            command.Parameters.AddWithValue("@Password", model.Password);
+                            command.Parameters.AddWithValue("@Email", model.Email);
+                            command.Connection = con;
+                            con.Open();
+                            result = Convert.ToInt32(command.ExecuteScalar());
+                            con.Close();
+                        }
                     }
-                }
 
-                return result;
+                    
+                }
             }
+            catch (Exception ex)
+            {
+                result = -1;
+            }
+
+            return result;
+        }
+
+
+        private int LoginUser(LoginViewModel model)
+        {
+            int result = 0;
+            try
+            {
+                SqlConnection con = new SqlConnection();
+                constring = ConfigurationManager.ConnectionStrings["rosharxk_Entities"].ConnectionString;
+
+                using (rosharxk_Entities rx = new rosharxk_Entities())
+                {
+                    using (var connection = new SqlConnection(_configuration.GetConnectionString("rosharxk_Entities")))
+                    {
+                        con = new SqlConnection(constring);
+                        using (var command = new SqlCommand("SP_UserLogin", connection))
+                        {
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@Username", model.Username);
+                            command.Parameters.AddWithValue("@Password", model.Password);                            
+                            command.Connection = con;
+                            con.Open();
+                            result = Convert.ToInt32(command.ExecuteScalar());
+                            con.Close();
+                        }
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result = -1;
+            }
+
+            return result;
         }
 
         public ActionResult About()

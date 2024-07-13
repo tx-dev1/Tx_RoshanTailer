@@ -28,4 +28,15 @@ namespace TestRoshanTailor.Models
 
         //public bool AcceptTerms { get; set; }
     }
+
+    public class LoginViewModel
+    {
+        [Required]
+        [StringLength(20, ErrorMessage = "Username cannot be longer than 20 characters.")]
+        public string Username { get; set; }
+       
+        [Required]
+        [StringLength(20, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 20 characters.")]
+        public string Password { get; set; }        
+    }
 }

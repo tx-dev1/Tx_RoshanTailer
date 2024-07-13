@@ -22,8 +22,8 @@
         <nav class="cd-main-nav js-main-nav">
             <ul class="cd-main-nav__list js-signin-modal-trigger">
                 <!-- inser more links here -->
-                <li><a class="cd-main-nav__item cd-main-nav__item--signin" href="#0" data-signin="login">Sign In</a></li>
-                <li><a class="cd-main-nav__item cd-main-nav__item--signup" href="#0" data-signin="signup">Sign Up</a></li>
+                <li><a class="cd-main-nav__item cd-main-nav__item--signin"  href="#0" data-signin="login">Sign In</a></li>
+                <li><a class="cd-main-nav__item cd-main-nav__item--signup"  href="#0" data-signin="signup">Sign Up</a></li>
             </ul>
         </nav>
     </header>
@@ -35,17 +35,17 @@
         <!-- this is the entire modal form, including the background -->
         <div class="cd-signin-modal__container">
             <!-- this is the container wrapper -->
-            <ul class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger">
-                <li><a href="#0" data-signin="login" data-type="login">Sign In</a></li>
-                <li><a href="#0" data-signin="signup" data-type="signup">New Account</a></li>
+            <ul id="divul" class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger">
+                <li><a href="#0" data-signin="login" id="tab1" data-type="login">Sign In</a></li>
+                <li><a href="#0" data-signin="signup" id="tab2" data-type="signup">New Account</a></li>
             </ul>
 
-            <div class="cd-signin-modal__block js-signin-modal-block" data-type="login">
+            <div class="cd-signin-modal__block js-signin-modal-block" id="div-sign-in" data-type="login">
                 <!-- log in form -->
                 <form class="cd-signin-modal__form">
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signin-email">E mail</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-email" type="email" placeholder="email">
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-email"  placeholder="username">
                         @*<span class="cd-signin-modal__error">Error message here!</span>*@
                     </p>
 
@@ -64,14 +64,14 @@
 
 
                     <p class="cd-signin-modal__fieldset">
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Login">
+                        <input id="userlogin" class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Login">
                     </p>
                 </form>
 
                 <p class="cd-signin-modal__bottom-message js-signin-modal-trigger"><a href="#0" data-signin="reset">Forgot password</a></p>
             </div> <!-- cd-signin-modal__block -->
 
-            <div class="cd-signin-modal__block js-signin-modal-block" data-type="signup">
+            <div class="cd-signin-modal__block js-signin-modal-block" id="div-sign-up" data-type="signup">
                 <!-- sign up form -->
                 @*<form class="cd-signin-modal__form">*@
                 <form asp-action="Register" method="post" class="cd-signin-modal__form">
@@ -228,14 +228,67 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (r) {
-                        alert('User Registerd Successfully!');
+                        //tab1,tab2,class="cd-signin-modal__block--is-selected"
+                        var res = JSON.parse(JSON.stringify(r));
+                        alert(JSON.parse(JSON.stringify(r)));
+                        if (res == 'Registration Successfull.') {                            
+                            $("#tab1").addClass('cd-selected');
+                            $("#div-sign-in").addClass('cd-signin-modal__block--is-selected');
+                            $("#div-sign-up").removeClass('cd-signin-modal__block--is-selected');                     
+
+                            $("#tab2").removeClass('cd-selected');
+                        }
+                        //alert('User Registerd Successfully!');
                     },
                     error: function (x) {
-                        alert('Please fix the error and try again');
+                        alert(JSON.parse(JSON.stringify(x))); 
+                        //alert('Please fix the error and try again');
                     }
                 })
             }
         })
+
+        $("body").on("click", "#userlogin", function () {
+            var userName = $("#signin-email");
+            //var userEmail = $("#signup-email");
+            var userPassword = $("#signin-password");
+            //var userCPassword = $("#signup-confirm-password");
+
+            if (userName == undefined || userName == '' || userName == null) {
+                alert('UserName required!');
+            }
+            //else if (userEmail == undefined || userEmail == '' || userEmail == null) { alert('User Email required!') }
+            else if (userPassword == undefined || userPassword == '' || userPassword == null) { alert('User Password required!') }
+            //else if (userCPassword == undefined || userCPassword == '' || userCPassword == null) { alert('User Confirm Password required!') }
+            else {
+
+                var _customer = {};
+                _customer.Username = userName.val();
+                _customer.Password = userPassword.val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/Login",
+                    data: JSON.stringify(_customer),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        //tab1,tab2,class="cd-signin-modal__block--is-selected"
+                        var res = JSON.parse(JSON.stringify(r));
+                        console.log(res);
+                        alert(JSON.parse(JSON.stringify(r)));
+                        if (res == 'Login Successfull.') {
+                            window.location.href = '/Home/Contact';
+                        }
+                       
+                    },
+                    error: function (x) {
+                        alert(JSON.parse(JSON.stringify(x)));
+                        //alert('Please fix the error and try again');
+                    }
+                })
+            }
+        })
+
     </script>
 
 
