@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    
 
     @*<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">*@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
@@ -36,7 +36,35 @@
     @*<link rel="stylesheet" href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css">*@
     <link href="~/Content/flag-icon.min.css" rel="stylesheet" />
     @*<link href="~/Content/style.css" rel="stylesheet" />*@
+    <style>
+        .cd-signin-modal__container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            position: relative;
+            top: 90px;
+        }
 
+        .modal:before {
+            position: absolute;
+            background-color: rgb(0,0,0, 0.52);
+            content: '';
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.25);
+            top: 0;
+        }
+    </style>
     <title>Dashboard Roshan Tailor</title>
 </head>
 
@@ -194,7 +222,7 @@
                                         </div>
                                     </li>*@
                                         <li class="nav-item">
-                                        <a class="nav-link" data-toggle="modal" id="cust_btn" data-target="#Measurement">Measurement Form</a>
+                                        <a class="nav-link js-btn">Measurement Form</a>
                                         </li>
                                         
                                         <li class="nav-item">
@@ -1017,22 +1045,24 @@
         <!-- ============================================================== -->
     </div>
 
-    <div id="measurementModel" class="cd-signin-modal js-signin-modal">
+    <div id="measurementModel" class="cd-signin-modal js-signin-modal modal">
+    
         <!-- this is the entire modal form, including the background -->
         <div class="cd-signin-modal__container">
+            <span class="close">X</span>
             <!-- this is the container wrapper -->
             <ul id="divul" class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger">
                 <li><a href="#0" data-signin="signup" id="tab2" data-type="signup">New Measurement</a></li>
             </ul>
 
-            
+
             <div class="cd-signin-modal__block js-signin-modal-block" id="div-Measurement" data-type="signup">
                 <!-- sign up form -->
                 @*<form class="cd-signin-modal__form">*@
                 <form asp-action="Register" method="post" class="cd-signin-modal__form">
                     <!--<p class="cd-signin-modal__fieldset">
-                    <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">Username</label>
-                    <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="username">-->
+            <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">Username</label>
+            <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="username">-->
                     @*<span class="cd-signin-modal__error">Error message here!</span>*@
                     <!--</p>-->
                     <p class="cd-signin-modal__fieldset">
@@ -1045,8 +1075,8 @@
 
 
                     <!--<p class="cd-signin-modal__fieldset">
-                    <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">E mail</label>
-                    <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="e mail">-->
+            <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">E mail</label>
+            <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="e mail">-->
                     @*<span class="cd-signin-modal__error">Error message here!</span>*@
                     <!--</p>-->
                     <p class="cd-signin-modal__fieldset">
@@ -1056,9 +1086,9 @@
                     </p>
 
                     <!--<p class="cd-signin-modal__fieldset">
-                    <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Password</label>
-                    <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="password">
-                    <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>-->
+            <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Password</label>
+            <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="password">
+            <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>-->
                     @*<span class="cd-signin-modal__error">Error message here!</span>*@
                     <!--</p>-->
                     <p class="cd-signin-modal__fieldset">
@@ -1069,9 +1099,9 @@
                     </p>
 
                     <!--<p class="cd-signin-modal__fieldset">
-                    <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Confirm Password</label>
-                    <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="confirm password">
-                    <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>-->
+            <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Confirm Password</label>
+            <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="confirm password">
+            <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>-->
                     @*<span class="cd-signin-modal__error">Error message here!</span>*@
                     <!--</p>-->
                     <p class="cd-signin-modal__fieldset">
@@ -1083,9 +1113,9 @@
 
 
                     @*<p class="cd-signin-modal__fieldset">
-                            <input type="checkbox" id="accept-terms" class="cd-signin-modal__input ">
-                            <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
-                        </p>*@
+                    <input type="checkbox" id="accept-terms" class="cd-signin-modal__input ">
+                    <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+                </p>*@
                     <p class="cd-signin-modal__fieldset">
                         <input type="checkbox" id="accept-terms" asp-for="AcceptTerms" class="cd-signin-modal__input ">
                         <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
@@ -1097,8 +1127,7 @@
                     </p>
                 </form>
             </div> <!-- cd-signin-modal__block -->
-
-             <!-- cd-signin-modal__block -->
+            <!-- cd-signin-modal__block -->
             <a href="#0" class="cd-signin-modal__close js-close">Close</a>
         </div> <!-- cd-signin-modal__container -->
     </div> <!-- cd-signin-modal -->
@@ -1142,11 +1171,21 @@
 
     @*<script src="assets/libs/js/dashboard-ecommerce.js"></script>*@
     <script src="~/Scripts/dashboard-ecommerce.js"></script>
-    <script type="text/javascript">
-        $(document).on("click", "#cust_btn", function () {           
-            $("#Measurement").modal("toggle");
-        });
-        
+    <script>
+        const the_button = document.querySelector(".js-btn")
+        const modal = document.querySelector(".modal")
+        const closeBtn = document.querySelector(".close")
+
+        document.addEventListener("DOMContentLoaded", () => {
+            the_button.addEventListener("click", handleClick)
+        })
+
+        function handleClick(event) {
+            modal.style.display = "block";
+            closeBtn.addEventListener("click", () => {
+                modal.style.display = "none"
+            })
+        }
     </script>
 </body>
 
