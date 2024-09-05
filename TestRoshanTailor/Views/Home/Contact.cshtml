@@ -37,8 +37,54 @@
     <link href="~/Content/flag-icon.min.css" rel="stylesheet" />
     @*<link href="~/Content/style.css" rel="stylesheet" />*@
     <style>
+
+        .cd-signin-modal__input--has-padding {
+            padding: 10px;
+        }
+
+        .cd-signin-modal__input--full-width {
+            width: 100%;
+        }
+
+        .cd-signin-modal__input--has-border {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .cd-signin-modal__fieldset {
+            margin-bottom: 20px;
+        }
+
+        .cd-signin-modal__label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .cd-signin-modal__form {
+            padding: 20px;
+        }
+
+        .cd-signin-modal__block {
+            padding: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+
         .cd-signin-modal__container {
-            max-width: 650px;
+            width: 77%;
+            height: 82%;
+            overflow-y: scroll;
             margin: 0 auto;
             background: #fff;
             padding: 20px;
@@ -203,28 +249,28 @@
                                 <div id="submenu-1" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         @*<li class="nav-item">
-                                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">E-Commerce</a>
-                                        <div id="submenu-1-2" class="collapse submenu" style="">
-                                            <ul class="nav flex-column">
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="index.html">E Commerce Dashboard</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="ecommerce-product.html">Product List</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="ecommerce-product-single.html">Product Single</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="ecommerce-product-checkout.html">Product Checkout</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>*@
+                                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">E-Commerce</a>
+                                                <div id="submenu-1-2" class="collapse submenu" style="">
+                                                    <ul class="nav flex-column">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="index.html">E Commerce Dashboard</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="ecommerce-product.html">Product List</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="ecommerce-product-single.html">Product Single</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="ecommerce-product-checkout.html">Product Checkout</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>*@
                                         <li class="nav-item">
-                                        <a class="nav-link js-btn">Measurement Form</a>
+                                            <a class="nav-link js-btn">Measurement Form</a>
                                         </li>
-                                        
+
                                         <li class="nav-item">
                                             <a class="nav-link" href="dashboard-sales.html">Sales</a>
                                         </li>
@@ -594,54 +640,54 @@
                                                     <tr>
                                                         <td>1</td>
                                                         <td>
-                                                            <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div>
+                                                            <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="product" class="rounded" width="45"></div>
                                                         </td>
-                                                        <td>Product #1 </td>
-                                                        <td>id000001 </td>
+                                                        <td>Product #1</td>
+                                                        <td>id000001</td>
                                                         <td>20</td>
                                                         <td>$80.00</td>
                                                         <td>27-08-2018 01:22:12</td>
-                                                        <td>Patricia J. King </td>
-                                                        <td><span class="badge-dot badge-brand mr-1"></span>InTransit </td>
+                                                        <td>Patricia J. King</td>
+                                                        <td><span class="badge-dot badge-brand mr-1"></span>InTransit</td>
                                                     </tr>
                                                     <tr>
                                                         <td>2</td>
                                                         <td>
-                                                            <div class="m-r-10"><img src="assets/images/product-pic-2.jpg" alt="user" class="rounded" width="45"></div>
+                                                            <div class="m-r-10"><img src="assets/images/product-pic-2.jpg" alt="product" class="rounded" width="45"></div>
                                                         </td>
-                                                        <td>Product #2 </td>
-                                                        <td>id000002 </td>
+                                                        <td>Product #2</td>
+                                                        <td>id000002</td>
                                                         <td>12</td>
                                                         <td>$180.00</td>
                                                         <td>25-08-2018 21:12:56</td>
-                                                        <td>Rachel J. Wicker </td>
-                                                        <td><span class="badge-dot badge-success mr-1"></span>Delivered </td>
+                                                        <td>Rachel J. Wicker</td>
+                                                        <td><span class="badge-dot badge-success mr-1"></span>Delivered</td>
                                                     </tr>
                                                     <tr>
                                                         <td>3</td>
                                                         <td>
-                                                            <div class="m-r-10"><img src="assets/images/product-pic-3.jpg" alt="user" class="rounded" width="45"></div>
+                                                            <div class="m-r-10"><img src="assets/images/product-pic-3.jpg" alt="product" class="rounded" width="45"></div>
                                                         </td>
-                                                        <td>Product #3 </td>
-                                                        <td>id000003 </td>
+                                                        <td>Product #3</td>
+                                                        <td>id000003</td>
                                                         <td>23</td>
                                                         <td>$820.00</td>
                                                         <td>24-08-2018 14:12:77</td>
-                                                        <td>Michael K. Ledford </td>
-                                                        <td><span class="badge-dot badge-success mr-1"></span>Delivered </td>
+                                                        <td>Michael K. Ledford</td>
+                                                        <td><span class="badge-dot badge-success mr-1"></span>Delivered</td>
                                                     </tr>
                                                     <tr>
                                                         <td>4</td>
                                                         <td>
-                                                            <div class="m-r-10"><img src="assets/images/product-pic-4.jpg" alt="user" class="rounded" width="45"></div>
+                                                            <div class="m-r-10"><img src="assets/images/product-pic-4.jpg" alt="product" class="rounded" width="45"></div>
                                                         </td>
-                                                        <td>Product #4 </td>
-                                                        <td>id000004 </td>
+                                                        <td>Product #4</td>
+                                                        <td>id000004</td>
                                                         <td>34</td>
                                                         <td>$340.00</td>
                                                         <td>23-08-2018 09:12:35</td>
-                                                        <td>Michael K. Ledford </td>
-                                                        <td><span class="badge-dot badge-success mr-1"></span>Delivered </td>
+                                                        <td>Michael K. Ledford</td>
+                                                        <td><span class="badge-dot badge-success mr-1"></span>Delivered</td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="9"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
@@ -651,7 +697,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
                             <!-- ============================================================== -->
                             <!-- end recent orders  -->
                             <!-- ============================================================== -->
@@ -1045,92 +1091,82 @@
         <!-- ============================================================== -->
     </div>
 
+
     <div id="measurementModel" class="cd-signin-modal js-signin-modal modal">
-    
         <!-- this is the entire modal form, including the background -->
         <div class="cd-signin-modal__container">
             <span class="close">X</span>
             <!-- this is the container wrapper -->
+
             <ul id="divul" class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger">
                 <li><a href="#0" data-signin="signup" id="tab2" data-type="signup">New Measurement</a></li>
             </ul>
 
-
             <div class="cd-signin-modal__block js-signin-modal-block" id="div-Measurement" data-type="signup">
-                <!-- sign up form -->
-                @*<form class="cd-signin-modal__form">*@
                 <form asp-action="Register" method="post" class="cd-signin-modal__form">
+                    <!-- Name Section -->
+                    <p class="cd-signin-modal__fieldset">
+                        <label class="cd-signin-modal__label" for="first-name">First Name</label>
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="first-name" name="FirstName" type="text" placeholder="First Name">
+                    </p>
+                    <p class="cd-signin-modal__fieldset">
+                        <label class="cd-signin-modal__label" for="last-name">Last Name</label>
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="last-name" name="LastName" type="text" placeholder="Last Name">
+                    </p>
+
+                    <!-- Date of Order -->
+                    <p class="cd-signin-modal__fieldset">
+                        <label class="cd-signin-modal__label" for="date-of-order">Date of Order</label>
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="date-of-order" name="DateOfOrder" type="date">
+                    </p>
+
+                    <!-- Billing Details -->
+                    <p class="cd-signin-modal__fieldset">
+                        <label class="cd-signin-modal__label" for="billing-details">Billing Details</label>
+                        <textarea class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="billing-details" name="BillingDetails" placeholder="Enter billing details"></textarea>
+                    </p>
+
+                    <!-- Measurement Details -->
+                    <p class="cd-signin-modal__fieldset">
+                        <label class="cd-signin-modal__label" for="measurement-details">Measurement Details</label>
+                        <textarea class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="measurement-details" name="MeasurementDetails" placeholder="Enter measurement details"></textarea>
+                    </p>
+
+                    <!-- Password -->
                     <!--<p class="cd-signin-modal__fieldset">
-            <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">Username</label>
-            <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="username">-->
-                    @*<span class="cd-signin-modal__error">Error message here!</span>*@
-                    <!--</p>-->
-                    <p class="cd-signin-modal__fieldset">
-                        <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">Username</label>
-                        @*@Html.TextBoxFor(c => c.Username, new { @class = "cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace"})*@
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" asp-for="Username" placeholder="username">
+        <label class="cd-signin-modal__label cd-signin-modal__label--password" for="signup-password">Password</label>
+        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" name="Password" type="password" placeholder="password">
+        <a href="#0" onclick="showhideReg()" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>
+    </p>
 
-                        <span asp-validation-for="Username" class="cd-signin-modal__error"></span>
-                    </p>
-
-
+    <p class="cd-signin-modal__fieldset">
+        <label class="cd-signin-modal__label cd-signin-modal__label--password" for="signup-confirm-password">Confirm Password</label>
+        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-confirm-password" name="ConfirmPassword" type="password" placeholder="confirm password">
+        <a href="#0" onclick="showhideRegConfirm()" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="toggleConfirmPassword"></i></a>
+    </p>-->
+                    <!-- Accept Terms -->
                     <!--<p class="cd-signin-modal__fieldset">
-            <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">E mail</label>
-            <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="e mail">-->
-                    @*<span class="cd-signin-modal__error">Error message here!</span>*@
-                    <!--</p>-->
-                    <p class="cd-signin-modal__fieldset">
-                        <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">E mail</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" asp-for="Email" placeholder="email">
-                        <span asp-validation-for="Email" class="cd-signin-modal__error"></span>
-                    </p>
-
+        <input type="checkbox" id="accept-terms" name="AcceptTerms" class="cd-signin-modal__input ">
+        <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+    </p>-->
+                    <!-- Submit Button -->
                     <!--<p class="cd-signin-modal__fieldset">
-            <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Password</label>
-            <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="password">
-            <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>-->
-                    @*<span class="cd-signin-modal__error">Error message here!</span>*@
-                    <!--</p>-->
+        <input id="createUser" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding" type="submit" value="Create Account">
+    </p>-->
                     <p class="cd-signin-modal__fieldset">
-                        <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Password</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" asp-for="Password" placeholder="password" type="password">
-                        <a href="#0" onclick="showhideReg()" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>
-                        <span asp-validation-for="Password" class="cd-signin-modal__error"></span>
+                        <button type="button" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding" onclick="addMeasurement()">Add Measurement</button>
                     </p>
 
-                    <!--<p class="cd-signin-modal__fieldset">
-            <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Confirm Password</label>
-            <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="confirm password">
-            <a href="#0" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="togglePassword"></i></a>-->
-                    @*<span class="cd-signin-modal__error">Error message here!</span>*@
-                    <!--</p>-->
+                    <!-- Print Invoice Button -->
                     <p class="cd-signin-modal__fieldset">
-                        <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-confirm-password">Confirm Password</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-confirm-password" asp-for="ConfirmPassword" placeholder="confirm password" type="password">
-                        <a href="#0" onclick="showhideRegConfirm()" class="cd-signin-modal__hide-password js-hide-password"><i class="far fa-eye" id="toggleConfirmPassword"></i></a>
-                        <span asp-validation-for="ConfirmPassword" class="cd-signin-modal__error"></span>
-                    </p>
-
-
-                    @*<p class="cd-signin-modal__fieldset">
-                    <input type="checkbox" id="accept-terms" class="cd-signin-modal__input ">
-                    <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
-                </p>*@
-                    <p class="cd-signin-modal__fieldset">
-                        <input type="checkbox" id="accept-terms" asp-for="AcceptTerms" class="cd-signin-modal__input ">
-                        <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
-                        <span asp-validation-for="AcceptTerms" class="cd-signin-modal__error"></span>
-                    </p>
-
-                    <p class="cd-signin-modal__fieldset">
-                        <input id="createUser" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding" type="submit" value="Create Account">
+                        <button type="button" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding" onclick="printInvoice()">Print Invoice</button>
                     </p>
                 </form>
             </div> <!-- cd-signin-modal__block -->
-            <!-- cd-signin-modal__block -->
             <a href="#0" class="cd-signin-modal__close js-close">Close</a>
         </div> <!-- cd-signin-modal__container -->
     </div> <!-- cd-signin-modal -->
+    <!-- cd-signin-modal -->
     <!-- ============================================================== -->
     <!-- end main wrapper  -->
     <!-- ============================================================== -->
@@ -1186,7 +1222,14 @@
                 modal.style.display = "none"
             })
         }
+
+        function printInvoice() {
+            // Implement the print functionality
+            window.print();
+        }
+
     </script>
+    
 </body>
 
 </html>
