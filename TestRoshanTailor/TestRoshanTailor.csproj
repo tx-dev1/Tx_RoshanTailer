@@ -183,6 +183,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RoshanTailer.edmx</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetMeasurements_Result.cs">
+      <DependentUpon>RoshanTailer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblMeasurement.cs">
+      <DependentUpon>RoshanTailer.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserLogin.cs">
       <DependentUpon>RoshanTailer.tt</DependentUpon>
     </Compile>

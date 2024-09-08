@@ -101,6 +101,74 @@ namespace TestRoshanTailor.Controllers
         }
 
         [HttpPost]
+        public JsonResult AddMeasurement(MeasurementViewModel model)
+        {
+            var output = string.Empty;
+            var result = AddMeasureMent(model);
+            if (result > 0)
+            {
+                // Registration successful, redirect to login or home page
+                //return RedirectToAction("Contact", "Home");
+                output = "Measurement added Successfully.";
+            }
+            else if (result == -1)
+            {
+                // ModelState.AddModelError(string.Empty, "Username already exists.");
+                output = "Entered details already exists.try different one.";
+                //return Json(output, JsonRequestBehavior.AllowGet);
+            }
+            else if (result == -2)
+            {
+                output = "Email already exists. try different one.";
+                //ModelState.AddModelError(string.Empty, "Email already exists.");
+                //return Json(output, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                output = "Internal Server error. please try again.";
+                //ModelState.AddModelError(string.Empty, "Registration failed. Please try again.");
+                //return Json(output, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(output, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpGet]
+        public List<MeasurementViewModel> GetMeasurements()
+        {
+            using (rosharxk_Entities rx = new rosharxk_Entities())
+            {
+                var result = new List<MeasurementViewModel>();
+                var p1 = new MeasurementViewModel();
+                var res = rx.tblMeasurements.ToList();
+                if (res.Count > 0)
+                {
+                    foreach (var item in res)
+                    {
+                        p1.FirstName = item.FirstName;
+                        p1.LastName = item.LastName;
+                        p1.Address = item.Address;
+                        p1.DateOfOrder=item.DateOfOrder;
+                        p1.BillingDetails = item.BillingDetails;
+                        p1.MeasureMentDetails = item.MeasureMentDetails;
+                        result.Add(p1);
+                    }
+
+                    return result.ToList();
+                }
+                else
+                {
+                    return result;
+                }
+                    //using (var connection = new SqlConnection(_configuration.GetConnectionString("rosharxk_Entities")))
+                    //{
+
+                    //}
+            }
+        }
+
+        [HttpPost]
         public JsonResult Login(LoginViewModel model)
         {
             var output = string.Empty;
@@ -110,7 +178,7 @@ namespace TestRoshanTailor.Controllers
                 // Registration successful, redirect to login or home page
                 //return RedirectToAction("Contact", "Home");
                 output = "Login Successfull.";
-            }            
+            }
             else
             {
                 output = "Invalid username and password";
@@ -147,7 +215,7 @@ namespace TestRoshanTailor.Controllers
                         }
                     }
 
-                    
+
                 }
             }
             catch (Exception ex)
@@ -157,6 +225,52 @@ namespace TestRoshanTailor.Controllers
 
             return result;
         }
+
+
+        private int AddMeasureMent(MeasurementViewModel model)
+        {
+            int result = 0;
+            try
+            {
+                SqlConnection con = new SqlConnection();
+                constring = ConfigurationManager.ConnectionStrings["rosharxk_Entities"].ConnectionString;
+
+                using (rosharxk_Entities rx = new rosharxk_Entities())
+                {
+                    using (var connection = new SqlConnection(_configuration.GetConnectionString("rosharxk_Entities")))
+                    {
+                        con = new SqlConnection(constring);
+                        using (var command = new SqlCommand("SP_UserRegistration", connection))
+                        {
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@FirstName", model.FirstName);
+                            command.Parameters.AddWithValue("@LastName", model.LastName);
+                            command.Parameters.AddWithValue("@DateOfOrder", model.DateOfOrder);
+
+                            command.Parameters.AddWithValue("@ContactNumber", model.ContactNumber);
+                            command.Parameters.AddWithValue("@Address", model.Address);
+                            command.Parameters.AddWithValue("@BillingDetails", model.BillingDetails);
+                            command.Parameters.AddWithValue("@MeasureMentDetails", model.MeasureMentDetails);
+
+                            command.Connection = con;
+                            con.Open();
+                            result = Convert.ToInt32(command.ExecuteScalar());
+                            con.Close();
+                        }
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result = -1;
+            }
+
+            return result;
+        }
+
+
 
 
         private int LoginUser(LoginViewModel model)
@@ -176,7 +290,7 @@ namespace TestRoshanTailor.Controllers
                         {
                             command.CommandType = System.Data.CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@Username", model.Username);
-                            command.Parameters.AddWithValue("@Password", model.Password);                            
+                            command.Parameters.AddWithValue("@Password", model.Password);
                             command.Connection = con;
                             con.Open();
                             result = Convert.ToInt32(command.ExecuteScalar());

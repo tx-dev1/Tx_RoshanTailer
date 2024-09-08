@@ -39,4 +39,16 @@ namespace TestRoshanTailor.Models
         [StringLength(20, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 20 characters.")]
         public string Password { get; set; }        
     }
+
+    public partial class MeasurementViewModel
+    {
+        public int MId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string DateOfOrder { get; set; }
+        public string ContactNumber { get; set; }
+        public string Address { get; set; }
+        public string BillingDetails { get; set; }
+        public string MeasureMentDetails { get; set; }        
+    }
 }

@@ -12,6 +12,8 @@ namespace TestRoshanTailor
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class rosharxk_Entities : DbContext
     {
@@ -27,5 +29,44 @@ namespace TestRoshanTailor
     
         public virtual DbSet<UserLogin> UserLogins { get; set; }
         public virtual DbSet<UserRegistration> UserRegistrations { get; set; }
+        public virtual DbSet<tblMeasurement> tblMeasurements { get; set; }
+    
+        public virtual ObjectResult<SP_GetMeasurements_Result> SP_GetMeasurements()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetMeasurements_Result>("SP_GetMeasurements");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_Measurement(string firstName, string lastName, string dateOfOrder, string contactNumber, string address, string billingDetails, string measureMentDetails)
+        {
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            var lastNameParameter = lastName != null ?
+                new ObjectParameter("LastName", lastName) :
+                new ObjectParameter("LastName", typeof(string));
+    
+            var dateOfOrderParameter = dateOfOrder != null ?
+                new ObjectParameter("DateOfOrder", dateOfOrder) :
+                new ObjectParameter("DateOfOrder", typeof(string));
+    
+            var contactNumberParameter = contactNumber != null ?
+                new ObjectParameter("ContactNumber", contactNumber) :
+                new ObjectParameter("ContactNumber", typeof(string));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("Address", address) :
+                new ObjectParameter("Address", typeof(string));
+    
+            var billingDetailsParameter = billingDetails != null ?
+                new ObjectParameter("BillingDetails", billingDetails) :
+                new ObjectParameter("BillingDetails", typeof(string));
+    
+            var measureMentDetailsParameter = measureMentDetails != null ?
+                new ObjectParameter("MeasureMentDetails", measureMentDetails) :
+                new ObjectParameter("MeasureMentDetails", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_Measurement", firstNameParameter, lastNameParameter, dateOfOrderParameter, contactNumberParameter, addressParameter, billingDetailsParameter, measureMentDetailsParameter);
+        }
     }
 }

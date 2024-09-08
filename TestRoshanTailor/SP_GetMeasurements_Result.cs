@@ -10,13 +10,15 @@
 namespace TestRoshanTailor
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UserLogin
+    public partial class SP_GetMeasurements_Result
     {
-        public long UserId { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public Nullable<System.DateTime> LastLoginDate { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string DateOfOrder { get; set; }
+        public string ContactNumber { get; set; }
+        public string Address { get; set; }
+        public string BillingDetails { get; set; }
+        public string MeasureMentDetails { get; set; }
     }
 }
