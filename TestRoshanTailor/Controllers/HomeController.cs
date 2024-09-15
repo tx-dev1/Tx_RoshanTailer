@@ -134,37 +134,31 @@ namespace TestRoshanTailor.Controllers
 
         }
 
+
         [HttpGet]
-        public List<MeasurementViewModel> GetMeasurements()
+        public JsonResult GetMeasurements()
         {
             using (rosharxk_Entities rx = new rosharxk_Entities())
             {
                 var result = new List<MeasurementViewModel>();
-                var p1 = new MeasurementViewModel();
                 var res = rx.tblMeasurements.ToList();
-                if (res.Count > 0)
+
+                foreach (var item in res)
                 {
-                    foreach (var item in res)
+                    var p1 = new MeasurementViewModel
                     {
-                        p1.FirstName = item.FirstName;
-                        p1.LastName = item.LastName;
-                        p1.Address = item.Address;
-                        p1.DateOfOrder=item.DateOfOrder;
-                        p1.BillingDetails = item.BillingDetails;
-                        p1.MeasureMentDetails = item.MeasureMentDetails;
-                        result.Add(p1);
-                    }
+                        FirstName = item.FirstName,
+                        LastName = item.LastName,
+                        Address = item.Address,
+                        DateOfOrder = item.DateOfOrder,
+                        BillingDetails = item.BillingDetails,
+                        MeasureMentDetails = item.MeasureMentDetails
+                    };
 
-                    return result.ToList();
+                    result.Add(p1);
                 }
-                else
-                {
-                    return result;
-                }
-                    //using (var connection = new SqlConnection(_configuration.GetConnectionString("rosharxk_Entities")))
-                    //{
 
-                    //}
+                return Json(result, JsonRequestBehavior.AllowGet); // Convert list to JSON
             }
         }
 
@@ -227,48 +221,53 @@ namespace TestRoshanTailor.Controllers
         }
 
 
-        private int AddMeasureMent(MeasurementViewModel model)
+      private int AddMeasureMent(MeasurementViewModel model)
+{
+    int result = 0;
+    try
+    {
+        // Fetch the connection string
+        string constring = ConfigurationManager.ConnectionStrings["rosharxk_Entities"].ConnectionString;
+
+        // If the connection string starts with "metadata=", extract the provider connection string
+        if (constring.ToLower().StartsWith("metadata="))
         {
-            int result = 0;
-            try
-            {
-                SqlConnection con = new SqlConnection();
-                constring = ConfigurationManager.ConnectionStrings["rosharxk_Entities"].ConnectionString;
-
-                using (rosharxk_Entities rx = new rosharxk_Entities())
-                {
-                    using (var connection = new SqlConnection(_configuration.GetConnectionString("rosharxk_Entities")))
-                    {
-                        con = new SqlConnection(constring);
-                        using (var command = new SqlCommand("SP_UserRegistration", connection))
-                        {
-                            command.CommandType = System.Data.CommandType.StoredProcedure;
-                            command.Parameters.AddWithValue("@FirstName", model.FirstName);
-                            command.Parameters.AddWithValue("@LastName", model.LastName);
-                            command.Parameters.AddWithValue("@DateOfOrder", model.DateOfOrder);
-
-                            command.Parameters.AddWithValue("@ContactNumber", model.ContactNumber);
-                            command.Parameters.AddWithValue("@Address", model.Address);
-                            command.Parameters.AddWithValue("@BillingDetails", model.BillingDetails);
-                            command.Parameters.AddWithValue("@MeasureMentDetails", model.MeasureMentDetails);
-
-                            command.Connection = con;
-                            con.Open();
-                            result = Convert.ToInt32(command.ExecuteScalar());
-                            con.Close();
-                        }
-                    }
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                result = -1;
-            }
-
-            return result;
+            var efBuilder = new System.Data.Entity.Core.EntityClient.EntityConnectionStringBuilder(constring);
+            constring = efBuilder.ProviderConnectionString;
         }
+
+        // Using statement ensures proper disposal of SqlConnection
+        using (var connection = new SqlConnection(constring))
+        {
+            // Create a command object with the stored procedure name and associate it with the connection
+            using (var command = new SqlCommand("SP_Measurement", connection))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                // Add parameters to the command
+                command.Parameters.AddWithValue("@FirstName", model.FirstName);
+                command.Parameters.AddWithValue("@LastName", model.LastName);
+                command.Parameters.AddWithValue("@DateOfOrder", model.DateOfOrder);
+                command.Parameters.AddWithValue("@ContactNumber", model.ContactNumber);
+                command.Parameters.AddWithValue("@Address", model.Address);
+                command.Parameters.AddWithValue("@BillingDetails", model.BillingDetails);
+                command.Parameters.AddWithValue("@MeasureMentDetails", model.MeasureMentDetails);
+
+                // Open the connection, execute the command, and retrieve the result
+                connection.Open();
+                result = Convert.ToInt32(command.ExecuteScalar());
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        // Log the exception (optional) and set result to -1
+        result = -1;
+    }
+
+    return result;
+}
+
 
 
 
