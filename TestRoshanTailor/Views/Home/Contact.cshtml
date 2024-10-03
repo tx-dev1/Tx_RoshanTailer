@@ -322,7 +322,8 @@
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="text-muted">Total Orders</h5>
+                                        <h5 class="text-muted">
+                                        Total Orders</h5>
                                         <div class="metric-value d-inline-block">
                                             <h1 class="mb-1">$12099</h1>
                                         </div>
@@ -421,20 +422,19 @@
 
 
         <div id="measurementModel" class="cd-signin-modal js-signin-modal modal">
-            <!-- this is the entire modal form, including the background -->
             <div class="cd-signin-modal__container">
                 <i class="fas fa-times close"></i>
-                <!-- this is the container wrapper -->
                 <ul id="divul" class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger">
                     <a href="#0" data-signin="signup" id="tab2" data-type="signup">New Measurement</a>
                 </ul>
                 <div class="cd-signin-modal__block js-signin-modal-block" id="div-Measurement" data-type="signup">
-                    <form id="measurementForm" asp-action="Register" method="post" class="cd-signin-modal__form" onsubmit="return validateForm()">
-                        <!-- Name Section -->
+                    <form id="measurementForm" asp-action="Register" method="post" class="cd-signin-modal__form">
+                        <!-- First Name -->
                         <p class="cd-signin-modal__fieldset">
                             <label class="cd-signin-modal__label" for="first-name">First Name</label>
                             <input class="cd-signin-modal__input cd-signin-modal__input--full-width" id="first-name" name="FirstName" type="text" placeholder="First Name" required>
                         </p>
+                        <!-- Last Name -->
                         <p class="cd-signin-modal__fieldset">
                             <label class="cd-signin-modal__label" for="last-name">Last Name</label>
                             <input class="cd-signin-modal__input cd-signin-modal__input--full-width" id="last-name" name="LastName" type="text" placeholder="Last Name" required>
@@ -464,16 +464,14 @@
                             <label class="cd-signin-modal__label" for="measurement-details">Measurement Details</label>
                             <textarea class="cd-signin-modal__input cd-signin-modal__input--full-width" id="measurement-details" name="MeasurementDetails" placeholder="Enter measurement details" required></textarea>
                         </p>
+                        <!-- Submit Button -->
                         <p class="cd-signin-modal__fieldset">
-                            @*<button type="button" class="submit-btn cd-signin-modal__input" onclick="AddMeasurement()">Add Measurement</button>*@
                             <button type="submit" class="submit-btn cd-signin-modal__input">Add Measurement</button>
-
                         </p>
                     </form>
                 </div>
             </div>
         </div>
-
 
         <!-- Print Details Modal -->
         <div id="printDetailsModal" class="cd-signin-modal modal" style="display:none;">
@@ -551,6 +549,15 @@
 
                 // Fetch measurements on page load
                 GetMeasurements();
+
+                // Handle form submission via AJAX
+                document.getElementById('measurementForm').addEventListener('submit', function (event) {
+                    // Prevent the default form submission
+                    event.preventDefault();
+
+                    // Trigger the AddMeasurement function to handle the form data
+                    AddMeasurement();
+                });
             });
 
             // Function to initialize modal open and close functionality
@@ -583,12 +590,7 @@
                 dateInput.value = formattedDate;
             }
 
-            // Function to print the invoice
-            function printInvoice() {
-                window.print();
-            }
-
-            // Function to add a new measurement
+            // Function to add a new measurement (via AJAX)
             function AddMeasurement() {
                 const formData = {
                     FirstName: $('#first-name').val(),
@@ -609,10 +611,10 @@
                     data: JSON.stringify(formData),
                     success: function (response) {
                         console.log('Server response:', response);
-                        alert(response);
+                        alert(response); // Show the server response as an alert
                         if (response === "Measurement added Successfully.") {
-                            GetMeasurements();
-                            $('.modal').hide(); // Close modal after success
+                            GetMeasurements(); // Fetch updated measurements
+                            $('.modal').hide(); // Close the modal after success
                         }
                     },
                     error: function (xhr, status, error) {
@@ -652,17 +654,17 @@
                 // Add new rows to the table
                 measurements.forEach(function (item, index) {
                     const row = `
-                                <tr>
-                                    <td>${index + 1}</td>
-                                    <td><img src="path/to/image" alt="Image"></td>
-                                    <td>${item.FirstName} ${item.LastName}</td>
-                                    <td>${index || 0}</td>
-                                    <td>${item.MeasurementDetails}</td>
-                                    <td>${item.BillingDetails}</td>
-                                    <td>${item.DateOfOrder}</td>
-                                    <td>${item.ContactNumber}</td>
-                                    <td>${item.Status || 'N/A'}</td>
-                                </tr>`;
+                              <tr>
+                                  <td>${index + 1}</td>
+                                  <td><img src="path/to/image" alt="Image"></td>
+                                  <td>${item.FirstName} ${item.LastName}</td>
+                                  <td>${index || 0}</td>
+                                  <td>${item.MeasurementDetails}</td>
+                                  <td>${item.BillingDetails}</td>
+                                  <td>${item.DateOfOrder}</td>
+                                  <td>${item.ContactNumber}</td>
+                                  <td>${item.Status || 'N/A'}</td>
+                              </tr>`;
                     tbody.append(row);
                 });
             }
