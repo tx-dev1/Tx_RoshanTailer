@@ -627,7 +627,7 @@
             // Function to fetch and display measurements
             function GetMeasurements() {
                 $.ajax({
-                    url: '/Home/GetMeasurements',
+                    url: '@Url.Action("GetMeasurements", "Home")',
                     type: 'GET',
                     dataType: 'json',
                     success: function (data) {

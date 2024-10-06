@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Xml;
 using TestRoshanTailor.Models;
 
 
@@ -138,28 +140,33 @@ namespace TestRoshanTailor.Controllers
         [HttpGet]
         public JsonResult GetMeasurements()
         {
-            using (rosharxk_Entities rx = new rosharxk_Entities())
+            var result = new List<MeasurementViewModel>();
+            try
             {
-                var result = new List<MeasurementViewModel>();
-                var res = rx.tblMeasurements.ToList();
-
-                foreach (var item in res)
+                using (rosharxk_Entities rx = new rosharxk_Entities())
                 {
-                    var p1 = new MeasurementViewModel
+                    
+                    var res = GetMeasureMentList();
+                    foreach (var item in res)
                     {
-                        FirstName = item.FirstName,
-                        LastName = item.LastName,
-                        Address = item.Address,
-                        DateOfOrder = item.DateOfOrder,
-                        BillingDetails = item.BillingDetails,
-                        MeasureMentDetails = item.MeasureMentDetails
-                    };
+                        var x = new MeasurementViewModel();
+                        x.FirstName = item.FirstName;
+                        x.LastName = item.LastName;
+                        x.Address=item.Address;
+                        x.BillingDetails = item.BillingDetails;
+                        x.DateOfOrder = item.DateOfOrder;
+                        x.ContactNumber=item.ContactNumber;
+                        result.Add(x);
+                    }
 
-                    result.Add(p1);
+                    return Json(result, JsonRequestBehavior.AllowGet); // Convert list to JSON
                 }
-
-                return Json(result, JsonRequestBehavior.AllowGet); // Convert list to JSON
             }
+            catch (Exception ex)
+            {
+                return Json(ex.ToString(), JsonRequestBehavior.AllowGet); // Convert list to JSON
+            }
+
         }
 
         [HttpPost]
@@ -221,56 +228,91 @@ namespace TestRoshanTailor.Controllers
         }
 
 
-      private int AddMeasureMent(MeasurementViewModel model)
-{
-    int result = 0;
-    try
-    {
-        // Fetch the connection string
-        string constring = ConfigurationManager.ConnectionStrings["rosharxk_Entities"].ConnectionString;
-
-        // If the connection string starts with "metadata=", extract the provider connection string
-        if (constring.ToLower().StartsWith("metadata="))
+        private List<MeasurementViewModel> GetMeasureMentList()
         {
-            var efBuilder = new System.Data.Entity.Core.EntityClient.EntityConnectionStringBuilder(constring);
-            constring = efBuilder.ProviderConnectionString;
-        }
-
-        // Using statement ensures proper disposal of SqlConnection
-        using (var connection = new SqlConnection(constring))
-        {
-            // Create a command object with the stored procedure name and associate it with the connection
-            using (var command = new SqlCommand("SP_Measurement", connection))
+            var measurementList = new List<MeasurementViewModel>();
+            try
             {
-                command.CommandType = System.Data.CommandType.StoredProcedure;
+                using (rosharxk_Entities rx = new rosharxk_Entities())
+                {
+                    // Fetch the connection string
+                    string constring = ConfigurationManager.ConnectionStrings["rosharxk_Entities"].ConnectionString;
 
-                // Add parameters to the command
-                command.Parameters.AddWithValue("@FirstName", model.FirstName);
-                command.Parameters.AddWithValue("@LastName", model.LastName);
-                command.Parameters.AddWithValue("@DateOfOrder", model.DateOfOrder);
-                command.Parameters.AddWithValue("@ContactNumber", model.ContactNumber);
-                command.Parameters.AddWithValue("@Address", model.Address);
-                command.Parameters.AddWithValue("@BillingDetails", model.BillingDetails);
-                command.Parameters.AddWithValue("@MeasureMentDetails", model.MeasureMentDetails);
+                    // If the connection string starts with "metadata=", extract the provider connection string
+                    if (constring.ToLower().StartsWith("metadata="))
+                    {
+                        var efBuilder = new System.Data.Entity.Core.EntityClient.EntityConnectionStringBuilder(constring);
+                        constring = efBuilder.ProviderConnectionString;
+                    }
 
-                // Open the connection, execute the command, and retrieve the result
-                connection.Open();
-                result = Convert.ToInt32(command.ExecuteScalar());
+                    // Using statement ensures proper disposal of SqlConnection
+                    using (var connection = new SqlConnection(constring))
+                    {
+                        // Create a command object with the stored procedure name and associate it with the connection
+                        using (var command = new SqlCommand("SP_GetMeasurements", connection))
+                        {
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            connection.Open();
+                            command.CommandTimeout = 0;
+                            var result =rx.Database.SqlQuery<MeasurementViewModel>("dbo.SP_GetMeasurements").ToList();           
+                            return result;
+                        }
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
-    }
-    catch (Exception ex)
-    {
-        // Log the exception (optional) and set result to -1
-        result = -1;
-    }
+        private int AddMeasureMent(MeasurementViewModel model)
+        {
+            int result = 0;
+            try
+            {
+                // Fetch the connection string
+                string constring = ConfigurationManager.ConnectionStrings["rosharxk_Entities"].ConnectionString;
 
-    return result;
-}
+                // If the connection string starts with "metadata=", extract the provider connection string
+                if (constring.ToLower().StartsWith("metadata="))
+                {
+                    var efBuilder = new System.Data.Entity.Core.EntityClient.EntityConnectionStringBuilder(constring);
+                    constring = efBuilder.ProviderConnectionString;
+                }
 
+                // Using statement ensures proper disposal of SqlConnection
+                using (var connection = new SqlConnection(constring))
+                {
+                    // Create a command object with the stored procedure name and associate it with the connection
+                    using (var command = new SqlCommand("SP_Measurement", connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
 
+                        // Add parameters to the command
+                        command.Parameters.AddWithValue("@FirstName", model.FirstName);
+                        command.Parameters.AddWithValue("@LastName", model.LastName);
+                        command.Parameters.AddWithValue("@DateOfOrder", model.DateOfOrder);
+                        command.Parameters.AddWithValue("@ContactNumber", model.ContactNumber);
+                        command.Parameters.AddWithValue("@Address", model.Address);
+                        command.Parameters.AddWithValue("@BillingDetails", model.BillingDetails);
+                        command.Parameters.AddWithValue("@MeasureMentDetails", model.MeasureMentDetails);
 
+                        // Open the connection, execute the command, and retrieve the result
+                        connection.Open();
+                        result = Convert.ToInt32(command.ExecuteScalar());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (optional) and set result to -1
+                result = -1;
+            }
 
+            return result;
+        }
 
         private int LoginUser(LoginViewModel model)
         {
@@ -319,6 +361,7 @@ namespace TestRoshanTailor.Controllers
         {
             return View();
         }
+
 
     }
 }
