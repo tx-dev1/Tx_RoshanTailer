@@ -300,13 +300,13 @@
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
-                                <h2 class="pageheader-title">E-commerce Dashboard Template </h2>
-                                <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+                                <h2 class="pageheader-title">Welcome to Roshan Tailor</h2>
+              
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">E-Commerce Dashboard Template</li>
+                                            <li class="breadcrumb-item active" aria-current="page"> Orders Dashboard </li>
                                         </ol>
                                     </nav>
                                 </div>
@@ -322,34 +322,18 @@
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="text-muted">
-                                        Total Orders</h5>
+                                        <h5 class="text-muted">Total Orders</h5>
                                         <div class="metric-value d-inline-block">
-                                            <h1 class="mb-1">$12099</h1>
+                                            <h1 class="mb-1" id="total-orders">0</h1> <!-- This will be updated dynamically -->
                                         </div>
-                                        @*<div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                            <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
-                                        </div>*@
                                     </div>
-                                    @*<div id="sparkline-revenue"></div>*@
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="text-muted">Average Measurements</h5>
-                                        <div class="metric-value d-inline-block">
-                                            <h1 class="mb-1">$12099</h1>
-                                        </div>
-                                        @*<div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                            <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
-                                        </div>*@
-                                    </div>
-                                    @*<div id="sparkline-revenue2"></div>*@
-                                </div>
-                            </div>
-
                         </div>
+
+
+
+                   
                         <div class="row">
                             <!-- ============================================================== -->
                             <!-- ============================================================== -->
@@ -364,7 +348,7 @@
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
                                                         <th class="border-0">#</th>
-                                                        <th class="border-0">Image</th>
+
                                                         <th class="border-0">Customer Name</th>
                                                         <th class="border-0">Product Id</th>
                                                         <th class="border-0">Measurement Details</th>
@@ -390,27 +374,24 @@
                             <!-- ============================================================== -->
 
                         </div>
-                    </div>
-                </div>
+                    </div></div>
                 <!-- ============================================================== -->
                 <!-- footer -->
                 <!-- ============================================================== -->
-                <div class="footer">
+                @*<div class="footer">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                Copyright © 2024. All rights reserved to <a href="https://www.talentxplore.org/">TalentXplore</a>.
+                     
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="text-md-right footer-links d-none d-sm-block">
-                                    <a href="javascript: void(0);">About</a>
-                                    <a href="javascript: void(0);">Support</a>
-                                    <a href="javascript: void(0);">Contact Us</a>
+                              
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
                 <!-- ============================================================== -->
                 <!-- end footer -->
                 <!-- ============================================================== -->
@@ -623,51 +604,56 @@
                     }
                 });
             }
-
-            // Function to fetch and display measurements
             function GetMeasurements() {
-                $.ajax({
-                    url: '@Url.Action("GetMeasurements", "Home")',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (data) {
-                        console.log('Received data:', data);
-                        if (Array.isArray(data)) {
-                            updateTable(data);
-                        } else {
-                            console.error('Data is not an array:', data);
-                            alert('Error: Received data is not an array.');
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('AJAX Error:', error);
-                        alert('Error: ' + error);
-                    }
-                });
+    $.ajax({
+        url: '@Url.Action("GetMeasurements", "Home")', // Assuming this URL returns the measurements (orders) data
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            console.log('Received data:', data);
+            if (Array.isArray(data)) {
+                updateTable(data);
+                updateTotalOrders(data); // Call function to update total orders
+            } else {
+                console.error('Data is not an array:', data);
+                alert('Error: Received data is not an array.');
             }
+        },
+        error: function (xhr, status, error) {
+            console.error('AJAX Error:', error);
+            alert('Error: ' + error);
+        }
+    });
+}
 
-            // Function to update the table with fetched measurements
-            function updateTable(measurements) {
-                const tbody = $('.table tbody');
-                tbody.empty(); // Clear existing rows
+// Function to update the total number of orders dynamically
+function updateTotalOrders(measurements) {
+    const totalOrders = measurements.length; // Assuming each measurement is an order
+    $('#total-orders').text(totalOrders); // Update the total orders count in the DOM
+}
 
-                // Add new rows to the table
-                measurements.forEach(function (item, index) {
-                    const row = `
-                              <tr>
-                                  <td>${index + 1}</td>
-                                  <td><img src="path/to/image" alt="Image"></td>
-                                  <td>${item.FirstName} ${item.LastName}</td>
-                                  <td>${index || 0}</td>
-                                  <td>${item.MeasurementDetails}</td>
-                                  <td>${item.BillingDetails}</td>
-                                  <td>${item.DateOfOrder}</td>
-                                  <td>${item.ContactNumber}</td>
-                                  <td>${item.Status || 'N/A'}</td>
-                              </tr>`;
-                    tbody.append(row);
-                });
-            }
+// Function to update the table with fetched measurements
+function updateTable(measurements) {
+    const tbody = $('.table tbody');
+    tbody.empty(); // Clear existing rows
+
+    // Add new rows to the table
+    measurements.forEach(function (item, index) {
+        const row = `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${item.FirstName} ${item.LastName}</td>
+                <td>${index || 0}</td>
+                <td>${item.MeasurementDetails}</td>
+                <td>${item.BillingDetails}</td>
+                <td>${item.DateOfOrder}</td>
+                <td>${item.ContactNumber}</td>
+                <td>${item.Status || 'N/A'}</td>
+            </tr>`;
+        tbody.append(row);
+    });
+}
+
         </script>
 
         @*$(document).ready(function () {
