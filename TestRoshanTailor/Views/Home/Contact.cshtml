@@ -36,8 +36,14 @@
     @*<link rel="stylesheet" href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css">*@
     <link href="~/Content/flag-icon.min.css" rel="stylesheet" />
     @*<link href="~/Content/style.css" rel="stylesheet" />*@
-    <style>
-
+<style>
+        .cd-main-header__logo img {
+            height: 22% !important;
+            padding-bottom: 10px !important;
+            width: 30% !important;
+            display: block;
+            max-width: 57% !important;
+        }
         .cd-signin-modal__input--has-padding {
             padding: 10px;
         }
@@ -135,7 +141,114 @@
             .submit-btn:hover {
                 background-color: #0056b3;
             }
-    </style>
+
+
+
+
+        .dashboard-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .dashboard-content {
+            flex: 1 0 auto;
+        }
+
+        /* Footer Styles */
+.footer {
+    background-color: #343a40;
+    color: #ffffff;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.footer-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.footer-heading::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background-color: #007bff;
+    margin-top: 0.5rem;
+}
+
+.footer p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #007bff;
+}
+
+.footer-form .form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.footer-form .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-form .btn-outline-light:hover {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.social-icons a {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #007bff;
+}
+
+.footer-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.list-inline-item:not(:last-child) {
+    margin-right: 1rem;
+}
+
+media(max-width: 767.98px) {
+    .footer {
+        text-align: center;
+    }
+
+    .footer-heading::after {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .social-icons {
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+}
+</style>
     <title>Dashboard Roshan Tailor</title>
 </head>
 
@@ -150,7 +263,7 @@
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top" style="background-color: #343642 !important;">
                 @*<a class="navbar-brand" href="Home.cshtml">Concept</a>*@
-                <div class="cd-main-header__logo"><a href="#0"><img src="~/Content/img/RoshanTailor_Name_Logo.jpeg" alt="Logo" /></a></div>
+                <div class="cd-main-header__logo"><a href="#0"><img src="~/Content/img/WhatsApp Image 2024-10-14 at 7.55.50 PM.jpeg" alt="Logo" /></a></div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -301,7 +414,7 @@
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
                                 <h2 class="pageheader-title">Welcome to Roshan Tailor</h2>
-              
+
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -333,7 +446,7 @@
 
 
 
-                   
+
                         <div class="row">
                             <!-- ============================================================== -->
                             <!-- ============================================================== -->
@@ -374,24 +487,83 @@
                             <!-- ============================================================== -->
 
                         </div>
-                    </div></div>
+                    </div>
+                </div>
                 <!-- ============================================================== -->
                 <!-- footer -->
                 <!-- ============================================================== -->
-                @*<div class="footer">
+                <!-- ============================================================== -->
+                <!-- footer -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- footer -->
+                <!-- ============================================================== -->
+                <footer class="footer bg-dark text-light py-5">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                     
+                            <!-- Company Info -->
+                            <div class="col-md-4 mb-4">
+                                <h5 class="text-uppercase mb-4 footer-heading">Roshan Tailor</h5>
+                                <p>Providing quality tailoring services since 1990. We specialize in custom-made suits, dresses, and alterations.</p>
+                                <address>
+                                    <strong>Address:</strong><br>
+                                    123 Fashion Street<br>
+                                    Styleville, ST 12345<br>
+                                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                                </address>
                             </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                <div class="text-md-right footer-links d-none d-sm-block">
+
+                            <!-- Quick Links -->
+                            <div class="col-md-4 mb-4">
+                                <h5 class="text-uppercase mb-4 footer-heading">Quick Links</h5>
+                                <ul class="list-unstyled footer-links">
+                                    <li><a href="#" class="text-light">Home</a></li>
+                                    <li><a href="#" class="text-light">Services</a></li>
+                                    <li><a href="#" class="text-light">Appointments</a></li>
+                                    <li><a href="#" class="text-light">Gallery</a></li>
+                                    <li><a href="#" class="text-light">About Us</a></li>
+                                    <li><a href="#" class="text-light">Contact</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Newsletter Signup -->
+                            <div class="col-md-4 mb-4">
+                                <h5 class="text-uppercase mb-4 footer-heading">Stay Connected</h5>
+                                <p>Subscribe to our newsletter for the latest updates and exclusive offers.</p>
                               
+                                <h6 class="text-uppercase mt-4 mb-3">Follow Us</h6>
+                                <div class="social-icons">
+                                    <a href="#" class="text-light mr-3"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#" class="text-light mr-3"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="text-light mr-3"><i class="fab fa-instagram"></i></a>
+                                    <a href="#" class="text-light"><i class="fab fa-linkedin-in"></i></a>
                                 </div>
                             </div>
                         </div>
+
+                        <hr class="footer-divider">
+
+                        <!-- Copyright and Terms -->
+                        <div class="row mt-4">
+                            <div class="col-md-6 text-center text-md-left">
+                                <p class="mb-0">&copy; 2023 Roshan Tailor. All rights reserved.</p>
+                            </div>
+                            <div class="col-md-6 text-center text-md-right">
+                                <ul class="list-inline mb-0">
+                                    <li class="list-inline-item"><a href="#" class="text-light">Privacy Policy</a></li>
+                                    <li class="list-inline-item"><a href="#" class="text-light">Terms of Use</a></li>
+                                    <li class="list-inline-item"><a href="#" class="text-light">Cookie Policy</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>*@
+                </footer>
+                <!-- ============================================================== -->
+                <!-- end footer -->
+                <!-- ============================================================== -
+                <!-- ============================================================== -->
+                <!-- end footer -->
+                <!-- ============================================================== -->
                 <!-- ============================================================== -->
                 <!-- end footer -->
                 <!-- ============================================================== -->
