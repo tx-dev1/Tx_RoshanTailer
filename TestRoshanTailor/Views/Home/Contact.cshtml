@@ -530,7 +530,7 @@ media(max-width: 767.98px) {
                             <div class="col-md-4 mb-4">
                                 <h5 class="text-uppercase mb-4 footer-heading">Stay Connected</h5>
                                 <p>Subscribe to our newsletter for the latest updates and exclusive offers.</p>
-                              
+
                                 <h6 class="text-uppercase mt-4 mb-3">Follow Us</h6>
                                 <div class="social-icons">
                                     <a href="#" class="text-light mr-3"><i class="fab fa-facebook-f"></i></a>
@@ -561,7 +561,7 @@ media(max-width: 767.98px) {
                 <!-- ============================================================== -->
                 <!-- end footer -->
                 <!-- ============================================================== -
-                <!-- ============================================================== -->
+            <!-- ============================================================== -->
                 <!-- end footer -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
@@ -633,11 +633,11 @@ media(max-width: 767.98px) {
                 <i class="fas fa-times close-btn"></i> <!-- Close icon -->
 
                 <div class="cd-signin-modal__block">
-                    <form method="post" class="cd-signin-modal__form">
-                        <!-- Order Number Input -->
+                    <form id="phone-form" class="cd-signin-modal__form">
+                        <!-- Phone Number Input -->
                         <p class="cd-signin-modal__fieldset">
-                            <label class="cd-signin-modal__label" for="order-number">Order Number</label>
-                            <input class="cd-signin-modal__input" id="order-number" name="OrderNumber" type="text" placeholder="Enter Order Number" required>
+                            <label class="cd-signin-modal__label" for="phone-number">Phone Number</label>
+                            <input class="cd-signin-modal__input" id="phone-number" name="PhoneNumber" type="text" placeholder="Enter Phone Number">
                         </p>
 
                         <!-- Submit Button -->
@@ -645,10 +645,16 @@ media(max-width: 767.98px) {
                             <button type="submit" class="cd-signin-modal__input cd-signin-modal__input--full-width">Submit</button>
                         </p>
                     </form>
+                    <div>
+                        <h2>Measurements Data:</h2>
+                        <div id="measurementsData"></div> <!-- Div to display the data -->
+
+                        <h3>Total Orders: <span id="totalOrders">0</span></h3> <!-- Display total orders -->
+                    </div>
                 </div>
             </div>
+           
         </div>
-
 
         <!-- cd-signin-modal -->
         <!-- ============================================================== -->
@@ -826,12 +832,97 @@ function updateTable(measurements) {
     });
 }
 
+
+
+   $(document).ready(function () {
+            // Getting the API URL
+            var apiUrl = '@Url.Action("GetMeasurements", "Home")';
+            console.log('API URL:', apiUrl); // Log the API URL to check if it's correct
+
+            // Event listener for the form submission
+            $("form").on("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                var phoneNumber = $("#phone-number").val(); // Get the phone number
+
+                if (!phoneNumber) {
+                    alert('Phone number is required');
+                    return;
+                }
+
+                // Make the AJAX request
+                $.ajax({
+                    url: apiUrl, // Use the API URL generated
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log('Received data:', data);
+
+                        if (Array.isArray(data)) {
+                            // Filter data based on phone number match
+                            var filteredData = data.filter(function (item) {
+                                return item.ContactNumber === phoneNumber;
+                            });
+
+                            if (filteredData.length > 0) {
+                                // Update the div with filtered data
+                                updateDataDiv(filteredData);
+
+                                // Update total orders (filtered)
+                                updateTotalOrders(filteredData);
+                            } else {
+                                alert('No data found for the given phone number.');
+                            }
+                        } else {
+                            console.error('Data is not an array:', data);
+                            alert('Error: Received data is not in the expected format.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('API request failed:', status, error);
+                        alert('Error fetching data: ' + error);
+                    }
+                });
+            });
+
+            // Function to update the div with filtered data
+            function updateDataDiv(data) {
+                var dataDiv = $("#measurementsData"); // Targeting the div to display the data
+                dataDiv.empty(); // Clear previous data
+
+                if (data.length === 0) {
+                    dataDiv.append('<p>No measurements found for this phone number.</p>');
+                    return;
+                }
+
+                data.forEach(function (item) {
+                    var entry = `
+                        <div class="measurement-entry">
+                        <p><strong>FirstName:</strong>${item.FirstName}</p>
+                        <p><strong>LastName:</strong>${item.LastName}</p>
+                            <p><strong>Measurement ID:</strong> ${item.MId}</p>
+                            <p><strong>Measurement Deatils:</strong> ${item.MeasureMentDetails}</p>
+                            <p><strong>BillingDetails:</strong> ${item.BillingDetails}</p>
+                            <p><strong>Timestamp:</strong> ${item.DateOfOrder}</p>
+                            <p><strong>Phone Number:</strong> ${item.ContactNumber}</p>
+                            <hr />
+                        </div>`;
+                    dataDiv.append(entry);
+                });
+            }
+
+            // Function to update the total orders
+            function updateTotalOrders(data) {
+                var totalOrders = data.length; // Assuming total orders = length of filtered data
+                $("#totalOrders").text(totalOrders); // Display total number of orders
+            }
+        });
+
         </script>
 
-        @*$(document).ready(function () {
-        GetMeasurements(); // Fetch measurements when the page loads
-        });*@
+        
 
 </body>
+
 
 </html>
