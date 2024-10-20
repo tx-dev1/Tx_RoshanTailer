@@ -406,12 +406,12 @@ media(max-width: 767.98px) {
         <!-- ============================================================== -->
         <div class="dashboard-wrapper">
             <div class="dashboard-ecommerce">
-                <div class="container-fluid dashboard-content ">
+                <div class="container-fluid dashboard-content">
                     <!-- ============================================================== -->
                     <!-- pageheader  -->
                     <!-- ============================================================== -->
                     <div class="row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="col-12">
                             <div class="page-header">
                                 <h2 class="pageheader-title">Welcome to Roshan Tailor</h2>
 
@@ -419,7 +419,7 @@ media(max-width: 767.98px) {
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page"> Orders Dashboard </li>
+                                            <li class="breadcrumb-item active" aria-current="page">Orders Dashboard</li>
                                         </ol>
                                     </nav>
                                 </div>
@@ -429,9 +429,10 @@ media(max-width: 767.98px) {
                     <!-- ============================================================== -->
                     <!-- end pageheader  -->
                     <!-- ============================================================== -->
-                    <div class="ecommerce-widget">
 
+                    <div class="ecommerce-widget">
                         <div class="row">
+                            <!-- Total Orders Card -->
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -444,15 +445,12 @@ media(max-width: 767.98px) {
                             </div>
                         </div>
 
-
-
-
                         <div class="row">
                             <!-- ============================================================== -->
+                            <!-- Recent Orders Table -->
                             <!-- ============================================================== -->
-                            <!-- recent orders  -->
-                            <!-- ============================================================== -->
-                            <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+                            <div class="col-12">
+                                <!-- Make sure the table spans full width on all screens -->
                                 <div class="card">
                                     <h5 class="card-header">Recent Orders</h5>
                                     <div class="card-body p-0">
@@ -461,7 +459,6 @@ media(max-width: 767.98px) {
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
                                                         <th class="border-0">#</th>
-
                                                         <th class="border-0">Customer Name</th>
                                                         <th class="border-0">Product Id</th>
                                                         <th class="border-0">Measurement Details</th>
@@ -472,106 +469,19 @@ media(max-width: 767.98px) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    <!-- Dynamically generated content will go here -->
                                                 </tbody>
                                             </table>
-
-
-
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
-                            <!-- ============================================================== -->
-                            <!-- end recent orders  -->
-                            <!-- ============================================================== -->
-
-                        </div>
+                        </div> <!-- End of row -->
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- footer -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- footer -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- footer -->
-                <!-- ============================================================== -->
-                <footer class="footer bg-dark text-light py-5">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <!-- Company Info -->
-                            <div class="col-md-4 mb-4">
-                                <h5 class="text-uppercase mb-4 footer-heading">Roshan Tailor</h5>
-                                <p>Providing quality tailoring services since 1990. We specialize in custom-made suits, dresses, and alterations.</p>
-                                <address>
-                                    <strong>Address:</strong><br>
-                                    123 Fashion Street<br>
-                                    Styleville, ST 12345<br>
-                                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                                </address>
-                            </div>
-
-                            <!-- Quick Links -->
-                            <div class="col-md-4 mb-4">
-                                <h5 class="text-uppercase mb-4 footer-heading">Quick Links</h5>
-                                <ul class="list-unstyled footer-links">
-                                    <li><a href="#" class="text-light">Home</a></li>
-                                    <li><a href="#" class="text-light">Services</a></li>
-                                    <li><a href="#" class="text-light">Appointments</a></li>
-                                    <li><a href="#" class="text-light">Gallery</a></li>
-                                    <li><a href="#" class="text-light">About Us</a></li>
-                                    <li><a href="#" class="text-light">Contact</a></li>
-                                </ul>
-                            </div>
-
-                            <!-- Newsletter Signup -->
-                            <div class="col-md-4 mb-4">
-                                <h5 class="text-uppercase mb-4 footer-heading">Stay Connected</h5>
-                                <p>Subscribe to our newsletter for the latest updates and exclusive offers.</p>
-
-                                <h6 class="text-uppercase mt-4 mb-3">Follow Us</h6>
-                                <div class="social-icons">
-                                    <a href="#" class="text-light mr-3"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#" class="text-light mr-3"><i class="fab fa-twitter"></i></a>
-                                    <a href="#" class="text-light mr-3"><i class="fab fa-instagram"></i></a>
-                                    <a href="#" class="text-light"><i class="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr class="footer-divider">
-
-                        <!-- Copyright and Terms -->
-                        <div class="row mt-4">
-                            <div class="col-md-6 text-center text-md-left">
-                                <p class="mb-0">&copy; 2023 Roshan Tailor. All rights reserved.</p>
-                            </div>
-                            <div class="col-md-6 text-center text-md-right">
-                                <ul class="list-inline mb-0">
-                                    <li class="list-inline-item"><a href="#" class="text-light">Privacy Policy</a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-light">Terms of Use</a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-light">Cookie Policy</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-                <!-- ============================================================== -->
-                <!-- end footer -->
-                <!-- ============================================================== -
-            <!-- ============================================================== -->
-                <!-- end footer -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- end footer -->
-                <!-- ============================================================== -->
             </div>
-            <!-- ============================================================== -->
-            <!-- end wrapper  -->
-            <!-- ============================================================== -->
         </div>
+
 
 
         <div id="measurementModel" class="cd-signin-modal js-signin-modal modal">
@@ -653,7 +563,7 @@ media(max-width: 767.98px) {
                     </div>
                 </div>
             </div>
-           
+
         </div>
 
         <!-- cd-signin-modal -->
@@ -920,7 +830,7 @@ function updateTable(measurements) {
 
         </script>
 
-        
+
 
 </body>
 
