@@ -492,42 +492,50 @@ media(max-width: 767.98px) {
                 </ul>
                 <div class="cd-signin-modal__block js-signin-modal-block" id="div-Measurement" data-type="signup">
                     <form id="measurementForm" asp-action="Register" method="post" class="cd-signin-modal__form">
-                        <!-- First Name -->
+                        <!-- First Name (Text Input + Canvas for handwriting) -->
                         <p class="cd-signin-modal__fieldset">
                             <label class="cd-signin-modal__label" for="first-name">First Name</label>
                             <input class="cd-signin-modal__input cd-signin-modal__input--full-width" id="first-name" name="FirstName" type="text" placeholder="First Name" required>
+                            <!-- Canvas for handwriting input -->
+                            <canvas id="firstNameCanvas" width="300" height="100" style="border: 1px solid black;"></canvas>
+                            <button type="button" id="clearFirstNameCanvas">Clear Canvas</button>
                         </p>
-                        <!-- Last Name -->
+
+                        <!-- Last Name (Text Input + Canvas for handwriting) -->
                         <p class="cd-signin-modal__fieldset">
                             <label class="cd-signin-modal__label" for="last-name">Last Name</label>
                             <input class="cd-signin-modal__input cd-signin-modal__input--full-width" id="last-name" name="LastName" type="text" placeholder="Last Name" required>
+                            <!-- Canvas for handwriting input -->
+                            <canvas id="lastNameCanvas" width="300" height="100" style="border: 1px solid black;"></canvas>
+                            <button type="button" id="clearLastNameCanvas">Clear Canvas</button>
                         </p>
-                        <!-- Date of Order -->
+
+                        <!-- Other fields remain unchanged -->
                         <p class="cd-signin-modal__fieldset">
                             <label class="cd-signin-modal__label" for="date-of-order">Date of Order</label>
                             <input class="cd-signin-modal__input cd-signin-modal__input--full-width" id="date-of-order" name="DateOfOrder" type="date" required>
                         </p>
-                        <!-- Contact Number -->
+
                         <p class="cd-signin-modal__fieldset">
                             <label class="cd-signin-modal__label" for="contact-number">Contact Number</label>
                             <input class="cd-signin-modal__input cd-signin-modal__input--full-width" id="contact-number" name="ContactNumber" type="text" placeholder="Enter contact number" required pattern="[0-9]{10}">
                         </p>
-                        <!-- Address -->
+
                         <p class="cd-signin-modal__fieldset">
                             <label class="cd-signin-modal__label" for="address">Address</label>
                             <textarea class="cd-signin-modal__input cd-signin-modal__input--full-width" id="address" name="Address" placeholder="Enter your address" required></textarea>
                         </p>
-                        <!-- Billing Details -->
+
                         <p class="cd-signin-modal__fieldset">
                             <label class="cd-signin-modal__label" for="billing-details">Billing Details</label>
                             <textarea class="cd-signin-modal__input cd-signin-modal__input--full-width" id="billing-details" name="BillingDetails" placeholder="Enter billing details" required></textarea>
                         </p>
-                        <!-- Measurement Details -->
+
                         <p class="cd-signin-modal__fieldset">
                             <label class="cd-signin-modal__label" for="measurement-details">Measurement Details</label>
                             <textarea class="cd-signin-modal__input cd-signin-modal__input--full-width" id="measurement-details" name="MeasurementDetails" placeholder="Enter measurement details" required></textarea>
                         </p>
-                        <!-- Submit Button -->
+
                         <p class="cd-signin-modal__fieldset">
                             <button type="submit" class="submit-btn cd-signin-modal__input">Add Measurement</button>
                         </p>
@@ -535,6 +543,7 @@ media(max-width: 767.98px) {
                 </div>
             </div>
         </div>
+
 
         <!-- Print Details Modal -->
         <div id="printDetailsModal" class="cd-signin-modal modal" style="display:none;">
@@ -608,6 +617,50 @@ media(max-width: 767.98px) {
         @*<script src="assets/libs/js/dashboard-ecommerce.js"></script>*@
         <script src="~/Scripts/dashboard-ecommerce.js"></script>
         <script>
+
+            function initializeCanvas(canvasId, inputId, clearButtonId) {
+                const canvas = document.getElementById(canvasId);
+                const ctx = canvas.getContext('2d');
+                let isDrawing = false;
+
+                // Event listeners for drawing on the canvas
+                canvas.addEventListener('mousedown', (e) => { isDrawing = true; draw(e); });
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('mouseup', () => { isDrawing = false; ctx.beginPath(); });
+                canvas.addEventListener('mouseout', () => { isDrawing = false; });
+
+                function draw(e) {
+                    if (!isDrawing) return;
+                    ctx.lineWidth = 2;
+                    ctx.lineCap = 'round';
+                    ctx.strokeStyle = 'black';
+                    ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                }
+
+                // Clear the canvas on button click
+                document.getElementById(clearButtonId).addEventListener('click', () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                });
+
+                // Convert canvas drawing to an image data URL and populate the input field
+                document.getElementById(canvasId).addEventListener('mouseup', function () {
+                    const dataUrl = canvas.toDataURL();
+                    document.getElementById(inputId).value = dataUrl; // Store the drawn signature in the input field as base64
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                // Initialize the canvas for handwriting inputs
+                initializeCanvas('firstNameCanvas', 'first-name', 'clearFirstNameCanvas');
+                initializeCanvas('lastNameCanvas', 'last-name', 'clearLastNameCanvas');
+            });
+
+
+
+
             document.addEventListener("DOMContentLoaded", () => {
                 // Initialize modal functionality
                 initializeModal('.js-btn', '.modal', '.close');
