@@ -383,7 +383,10 @@
                                             <a class="nav-link" href="dashboard-sales.html">Print Details</a>
                                         </li>*@
                                         <li class="nav-item">
-                                            <a class="nav-link js-print-btn">Print Details</a>
+                                            <a class="nav-link js-print-btn">Customer Print</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link js-karigarprint-btn">Karigar Details</a>
                                         </li>
 
                                         <li class="nav-item">
@@ -461,9 +464,10 @@
                                                     <tr class="border-0">
                                                         <th class="border-0">#</th>
                                                         <th class="border-0">Customer Name</th>
+                                                        <th class="border-0">Unit</th>
                                                         <th class="border-0">Product Id</th>
                                                         <th class="border-0">Measurement Details</th>
-                                                        <th class="border-0">Billing Details</th>
+                                                        <th class="border-0">Cloth Type</th>
                                                         <th class="border-0">Order Time</th>
                                                         <th class="border-0">Contact Number</th>
                                                         <th class="border-0">Status</th>
@@ -563,12 +567,12 @@
                     <form id="measurementForm" asp-action="Register" method="post" class="cd-signin-modal__form">
                         <!-- First Name -->
                         <p class="cd-signin-modal__fieldset">
-                            <label class="cd-signin-modal__label" for="first-name">First Name</label>
+                            <label class="cd-signin-modal__label" for="first-name">Name</label>
                             <input class="cd-signin-modal__input cd-signin-modal__input--full-width" id="first-name" name="FirstName" type="text" placeholder="First Name" required>
                         </p>
                         <!-- Last Name -->
                         <p class="cd-signin-modal__fieldset">
-                            <label class="cd-signin-modal__label" for="last-name">Last Name</label>
+                            <label class="cd-signin-modal__label" for="last-name">Unit</label>
                             <input class="cd-signin-modal__input cd-signin-modal__input--full-width" id="last-name" name="LastName" type="text" placeholder="Last Name" required>
                         </p>
                         <!-- Date of Order -->
@@ -588,7 +592,7 @@
                         </p>
                         <!-- Billing Details -->
                         <p class="cd-signin-modal__fieldset">
-                            <label class="cd-signin-modal__label" for="billing-details">Billing Details</label>
+                            <label class="cd-signin-modal__label" for="billing-details">Cloth Detail</label>
                             <textarea class="cd-signin-modal__input cd-signin-modal__input--full-width" id="billing-details" name="BillingDetails" placeholder="Enter billing details" required></textarea>
                         </p>
                         <!-- Measurement Details -->
@@ -605,13 +609,18 @@
             </div>
         </div>
 
-        <!-- Print Details Modal -->
+        <!-- Customer Print Modal -->
         <div id="printDetailsModal" class="cd-signin-modal modal" style="display:none;">
             <!-- Print Details Modal Content -->
             <div class="cd-signin-modal__container">
                 <i class="fas fa-times close-btn"></i> <!-- Close icon -->
 
                 <div class="cd-signin-modal__block">
+                    <div>
+                        <h3>
+                            Customer Print
+                        </h3>
+                    </div>
                     <form id="phone-form" class="cd-signin-modal__form">
                         <!-- Phone Number Input -->
                         <p class="cd-signin-modal__fieldset">
@@ -635,6 +644,41 @@
 
         </div>
 
+
+        <!-- karigar Print Modal -->
+        <div id="printkarigarModal" class="cd-signin-modal modal" style="display:none;">
+            <!-- karigar Print Details Modal Content -->
+            <div class="cd-signin-modal__container">
+                <i class="fas fa-times close-btns"></i> <!-- Close icon -->
+
+                <div class="cd-signin-modal__block">
+                    <div class="text-align-center m-3">
+                        <h3>
+                            Karigar Details
+                        </h3>
+                    </div>
+                    <form id="phone-form" class="cd-signin-modal__form">
+                        <!-- Phone Number Input -->
+                        <p class="cd-signin-modal__fieldset">
+                            <label class="cd-signin-modal__label" for="phone-number">Phone Number</label>
+                            <input class="cd-signin-modal__input" id="phone-number" name="PhoneNumber" type="text" placeholder="Enter Phone Number">
+                        </p>
+
+                        <!-- Submit Button -->
+                        <p class="cd-signin-modal__fieldset">
+                            <button type="submit" class="cd-signin-modal__input cd-signin-modal__input--full-width">Submit</button>
+                        </p>
+                    </form>
+                    <div>
+                        <h2>Measurements Data:</h2>
+                        <div id="measurementsData"></div> <!-- Div to display the data -->
+
+                        <h3>Total Orders: <span id="totalOrders">0</span></h3> <!-- Display total orders -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
         <!-- cd-signin-modal -->
@@ -683,6 +727,27 @@
                 // Initialize modal functionality
                 initializeModal('.js-btn', '.modal', '.close');
                 initializeModal('.js-print-btn', '#printDetailsModal', '.close-btn');
+
+                // Set the date of order field
+                setDateInput('#date-of-order');
+
+                // Fetch measurements on page load
+                GetMeasurements();
+
+                // Handle form submission via AJAX
+                document.getElementById('measurementForm').addEventListener('submit', function (event) {
+                    // Prevent the default form submission
+                    event.preventDefault();
+
+                    // Trigger the AddMeasurement function to handle the form data
+                    AddMeasurement();
+                });
+            });
+
+            document.addEventListener("DOMContentLoaded", () => {
+                // Initialize modal functionality
+                initializeModal('.js-btn', '.modal', '.close');
+                initializeModal('.js-karigarprint-btn', '#printkarigarModal', '.close-btns');
 
                 // Set the date of order field
                 setDateInput('#date-of-order');
@@ -801,7 +866,8 @@ function updateTable(measurements) {
         const row = `
             <tr>
                 <td>${index + 1}</td>
-                <td>${item.FirstName} ${item.LastName}</td>
+                <td>${item.FirstName}</td>
+                <td>${item.LastName}</td>
                 <td>${index || 0}</td>
                 <td>${item.MeasurementDetails}</td>
                 <td>${item.BillingDetails}</td>
@@ -879,11 +945,11 @@ function updateTable(measurements) {
                 data.forEach(function (item) {
                     var entry = `
                         <div class="measurement-entry">
-                        <p><strong>FirstName:</strong>${item.FirstName}</p>
-                        <p><strong>LastName:</strong>${item.LastName}</p>
+                        <p><strong>Name:</strong>${item.FirstName}</p>
+                        <p><strong>Unit:</strong>${item.LastName}</p>
                             <p><strong>Measurement ID:</strong> ${item.MId}</p>
                             <p><strong>Measurement Deatils:</strong> ${item.MeasureMentDetails}</p>
-                            <p><strong>BillingDetails:</strong> ${item.BillingDetails}</p>
+                            <p><strong>Cloth Type:</strong> ${item.BillingDetails}</p>
                             <p><strong>Timestamp:</strong> ${item.DateOfOrder}</p>
                             <p><strong>Phone Number:</strong> ${item.ContactNumber}</p>
                             <hr />
