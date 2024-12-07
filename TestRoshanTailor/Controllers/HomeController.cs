@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using System.Xml;
 using TestRoshanTailor.Models;
 
@@ -121,7 +122,7 @@ namespace TestRoshanTailor.Controllers
             }
             else if (result == -2)
             {
-                output = "Email already exists. try different one.";
+                output = "Contact already exists. try different one.";
                 //ModelState.AddModelError(string.Empty, "Email already exists.");
                 //return Json(output, JsonRequestBehavior.AllowGet);
             }
@@ -137,25 +138,50 @@ namespace TestRoshanTailor.Controllers
         }
 
 
+
+
+
         [HttpGet]
         public JsonResult GetMeasurements()
         {
+            var constring = string.Empty;
+            DataSet ds = new DataSet();
             var result = new List<MeasurementViewModel>();
             try
             {
+                SqlConnection con = new SqlConnection();
+                constring = ConfigurationManager.ConnectionStrings["rosharxk_Entities"].ConnectionString;
                 using (rosharxk_Entities rx = new rosharxk_Entities())
                 {
-                    
-                    var res = GetMeasureMentList();
-                    foreach (var item in res)
+
+                    using (var connection = new SqlConnection(_configuration.GetConnectionString("rosharxk_Entities")))
+                    {
+                        con = new SqlConnection(constring);
+                        using (var command = new SqlCommand("SP_getMeasurments", connection))
+                        {
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            command.Connection = con;
+                            SqlDataAdapter da = new SqlDataAdapter();
+                            da.SelectCommand = command;
+                            con.Open();
+                            da.Fill(ds);
+                            con.Close();
+                        }
+                    }
+
+                    DataTable dt = ds.Tables[0];
+                    //var res = GetMeasureMentList();
+
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         var x = new MeasurementViewModel();
-                        x.FirstName = item.FirstName;
-                        x.LastName = item.LastName;
-                        x.Address=item.Address;
-                        x.BillingDetails = item.BillingDetails;
-                        x.DateOfOrder = item.DateOfOrder;
-                        x.ContactNumber=item.ContactNumber;
+                        x.FirstName = dt.Rows[i]["FirstName"].ToString();
+                        x.LastName = dt.Rows[i]["LastName"].ToString();
+                        x.Address = dt.Rows[i]["Address"].ToString(); 
+                        x.BillingDetails = dt.Rows[i]["BillingDetails"].ToString(); 
+                        x.DateOfOrder = dt.Rows[i]["DateOfOrder"].ToString();  
+                        x.ContactNumber = dt.Rows[i]["ContactNumber"].ToString();
+                        x.MeasureMentDetails = dt.Rows[i]["MeasureMentDetails"].ToString();
                         result.Add(x);
                     }
 
@@ -254,7 +280,7 @@ namespace TestRoshanTailor.Controllers
                             command.CommandType = System.Data.CommandType.StoredProcedure;
                             connection.Open();
                             command.CommandTimeout = 0;
-                            var result =rx.Database.SqlQuery<MeasurementViewModel>("dbo.SP_GetMeasurements").ToList();           
+                            var result = rx.Database.SqlQuery<MeasurementViewModel>("dbo.SP_GetMeasurements").ToList();
                             return result;
                         }
 
