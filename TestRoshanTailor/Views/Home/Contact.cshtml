@@ -884,16 +884,46 @@ function updateTable(measurements) {
     const tbody = $('.table tbody');
     tbody.empty(); // Clear existing rows
 
+    // Mapping for BillingDetails
+    const clothDetailsMapping = {
+        1: "Shirt / Pant",
+        2: "Shirt",
+        3: "Pant",
+        4: "Coat / Pant",
+        5: "Others"
+    };
+
+
     // Add new rows to the table
+//    measurements.forEach(function (item, index) {
+//        const row = `
+//            <tr>
+//                <td>${index + 1}</td>
+//                <td>${item.FirstName}</td>
+//                <td>${item.LastName}</td>
+//                <td>${index || 0}</td>
+//                <td>${item.MeasurementDetails}</td>
+//                <td>${item.BillingDetails}</td>
+//                <td>${item.DateOfOrder}</td>
+//                <td>${item.ContactNumber}</td>
+//                <td>${item.Status || 'N/A'}</td>
+//            </tr>`;
+//        tbody.append(row);
+//    });
+//}
+
+
     measurements.forEach(function (item, index) {
+        const billingLabel = clothDetailsMapping[item.BillingDetails] || "Unknown"; // Map value to label
+
         const row = `
             <tr>
                 <td>${index + 1}</td>
                 <td>${item.FirstName}</td>
                 <td>${item.LastName}</td>
                 <td>${index || 0}</td>
-                <td>${item.MeasurementDetails}</td>
-                <td>${item.BillingDetails}</td>
+                <td>${item.MeasureMentDetails}</td>
+                <td>${billingLabel}</td> <!-- Display label instead of numeric value -->
                 <td>${item.DateOfOrder}</td>
                 <td>${item.ContactNumber}</td>
                 <td>${item.Status || 'N/A'}</td>
@@ -901,7 +931,6 @@ function updateTable(measurements) {
         tbody.append(row);
     });
 }
-
 
 
    $(document).ready(function () {
