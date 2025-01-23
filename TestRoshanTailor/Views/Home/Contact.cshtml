@@ -767,26 +767,7 @@
                 });
             });
 
-            document.addEventListener("DOMContentLoaded", () => {
-                // Initialize modal functionality
-                initializeModal('.js-btn', '.modal', '.close');
-                initializeModal('.js-karigarprint-btn', '#printkarigarModal', '.close-btns');
-
-                // Set the date of order field
-                setDateInput('#date-of-order');
-
-                // Fetch measurements on page load
-                GetMeasurements();
-
-                // Handle form submission via AJAX
-                document.getElementById('measurementForm').addEventListener('submit', function (event) {
-                    // Prevent the default form submission
-                    event.preventDefault();
-
-                    // Trigger the AddMeasurement function to handle the form data
-                    AddMeasurement();
-                });
-            });
+           
 
             // Function to initialize modal open and close functionality
             function initializeModal(buttonSelector, modalSelector, closeSelector) {
